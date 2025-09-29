@@ -1,22 +1,15 @@
-import express, { Request, Response } from "express";
+// Extend Request interface to include multer file property
+declare global {
+  namespace Express {
+    interface Request {
+      file?: Express.Multer.File;
+    }
+  }
+}
 
-const app = express();
+import { createApp, startServer } from "./config/server";
+
 const PORT = process.env.PORT || 3000;
+const app = createApp();
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Routes
-app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Hello from Express server!" });
-});
-
-app.get("/health", (req: Request, res: Response) => {
-  res.json({ status: "OK", timestamp: new Date().toISOString() });
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+startServer(app, Number(PORT));
