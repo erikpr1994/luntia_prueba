@@ -7,13 +7,16 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
+    "format": "turbo format",
+    "check": "turbo check",
     "test": "turbo test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "workspaces": [
-    "server"
+    "server",
+    "client"
   ],
   "devDependencies": {
     "turbo": "^2.5.8"
