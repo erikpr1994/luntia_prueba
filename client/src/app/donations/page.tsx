@@ -34,12 +34,12 @@ export default function DonationsPage() {
 
   const totalDonations = donations.length;
   const totalAmount = donations.reduce(
-    (sum, donation) => sum + donation.amount,
+    (sum, donation) => sum + parseFloat(donation.amount?.toString() || '0'),
     0
   );
   const uniqueDonors = new Set(donations.map((d) => d.donor)).size;
   const avgDonation =
-    totalDonations > 0 ? Math.round(totalAmount / totalDonations) : 0;
+    totalDonations > 0 ? totalAmount / totalDonations : 0;
 
   // Get recent donations (last 7 days)
   const recentDonations = donations.filter((d) => {
@@ -49,7 +49,7 @@ export default function DonationsPage() {
     return donationDate >= sevenDaysAgo;
   });
   const recentAmount = recentDonations.reduce(
-    (sum, donation) => sum + donation.amount,
+    (sum, donation) => sum + parseFloat(donation.amount?.toString() || '0'),
     0
   );
 
@@ -98,15 +98,15 @@ export default function DonationsPage() {
           <tr key={donation.id}>
             <td>{donation.donor}</td>
             <td>{donation.organization}</td>
-            <td>${donation.amount.toLocaleString()}</td>
+            <td>{parseFloat(donation.amount?.toString() || '0').toLocaleString("es-ES", { style: "currency", currency: "EUR" })}</td>
             <td>{new Date(donation.date).toLocaleDateString("es-ES")}</td>
             <td>
               <span
                 className={`donation-type ${
-                  donation.amount >= 1000 ? "major" : "standard"
+                  parseFloat(donation.amount?.toString() || '0') >= 1000 ? "major" : "standard"
                 }`}
               >
-                {donation.amount >= 1000 ? "Mayor" : "Estándar"}
+                {parseFloat(donation.amount?.toString() || '0') >= 1000 ? "Mayor" : "Estándar"}
               </span>
             </td>
           </tr>
