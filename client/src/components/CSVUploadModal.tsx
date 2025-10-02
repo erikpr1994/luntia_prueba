@@ -32,7 +32,7 @@ export default function CSVUploadModal({
     if (onUploadComplete) {
       onUploadComplete();
     }
-    
+
     // Close modal after a short delay to show success message
     setTimeout(() => {
       onClose();

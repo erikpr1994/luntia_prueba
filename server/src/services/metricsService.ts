@@ -6,10 +6,15 @@ export class MetricsService {
     const orgFilter = organization ? "WHERE organization = $1" : "";
     const params = organization ? [organization] : [];
 
-    const [volunteerRetention, avgHoursPerVolunteer, topPerformers, engagementTrend] = 
-      await Promise.all([
-        // Volunteer retention rate (volunteers active in last 3 months vs total)
-        query(`
+    const [
+      volunteerRetention,
+      avgHoursPerVolunteer,
+      topPerformers,
+      engagementTrend,
+    ] = await Promise.all([
+      // Volunteer retention rate (volunteers active in last 3 months vs total)
+      query(
+        `
           WITH recent_volunteers AS (
             SELECT DISTINCT v.id 
             FROM volunteers v 
@@ -23,10 +28,13 @@ export class MetricsService {
           SELECT 
             COALESCE(ROUND((SELECT COUNT(*) FROM recent_volunteers)::DECIMAL / 
             NULLIF((SELECT total FROM total_volunteers), 0) * 100, 1), 0) as retention_rate
-        `, params),
-        
-        // Average hours per volunteer
-        query(`
+        `,
+        params
+      ),
+
+      // Average hours per volunteer
+      query(
+        `
           SELECT 
             COALESCE(ROUND(AVG(volunteer_hours.hours), 1), 0) as avg_hours_per_volunteer
           FROM (
@@ -35,10 +43,13 @@ export class MetricsService {
             LEFT JOIN shifts s ON v.id = s.volunteer_id ${orgFilter}
             GROUP BY v.id
           ) volunteer_hours
-        `, params),
-        
-        // Top 5 performing volunteers
-        query(`
+        `,
+        params
+      ),
+
+      // Top 5 performing volunteers
+      query(
+        `
           SELECT v.name, v.role, COALESCE(SUM(s.hours), 0) as total_hours,
                  COUNT(s.id) as shift_count
           FROM volunteers v
@@ -46,10 +57,13 @@ export class MetricsService {
           GROUP BY v.id, v.name, v.role
           ORDER BY total_hours DESC
           LIMIT 5
-        `, params),
-        
-        // Monthly engagement trend (last 6 months)
-        query(`
+        `,
+        params
+      ),
+
+      // Monthly engagement trend (last 6 months)
+      query(
+        `
           SELECT 
             DATE_TRUNC('month', s.date) as month,
             COUNT(DISTINCT s.volunteer_id) as active_volunteers,
@@ -59,14 +73,20 @@ export class MetricsService {
           WHERE s.date >= CURRENT_DATE - INTERVAL '6 months'
           GROUP BY DATE_TRUNC('month', s.date)
           ORDER BY month
-        `, params)
-      ]);
+        `,
+        params
+      ),
+    ]);
 
     return {
-      retentionRate: parseFloat(volunteerRetention.rows[0]?.retention_rate || 0),
-      avgHoursPerVolunteer: parseFloat(avgHoursPerVolunteer.rows[0]?.avg_hours_per_volunteer || 0),
+      retentionRate: parseFloat(
+        volunteerRetention.rows[0]?.retention_rate || 0
+      ),
+      avgHoursPerVolunteer: parseFloat(
+        avgHoursPerVolunteer.rows[0]?.avg_hours_per_volunteer || 0
+      ),
       topPerformers: topPerformers.rows,
-      engagementTrend: engagementTrend.rows
+      engagementTrend: engagementTrend.rows,
     };
   }
 
@@ -75,26 +95,37 @@ export class MetricsService {
     const orgFilter = organization ? "WHERE organization = $1" : "";
     const params = organization ? [organization] : [];
 
-    const [volunteerValue, activityEfficiency, donationTrends, resourceUtilization] = 
-      await Promise.all([
-        // Economic value of volunteer work (assuming $15/hour)
-        query(`
+    const [
+      volunteerValue,
+      activityEfficiency,
+      donationTrends,
+      resourceUtilization,
+    ] = await Promise.all([
+      // Economic value of volunteer work (assuming $15/hour)
+      query(
+        `
           SELECT 
             COALESCE(SUM(s.hours * 15), 0) as economic_value,
             COUNT(DISTINCT s.volunteer_id) as contributing_volunteers
           FROM shifts s ${orgFilter}
-        `, params),
-        
-        // Activity efficiency (participants per activity)
-        query(`
+        `,
+        params
+      ),
+
+      // Activity efficiency (participants per activity)
+      query(
+        `
           SELECT 
             COALESCE(AVG(a.participants), 0) as avg_participants_per_activity,
             COUNT(a.id) as total_activities
           FROM activities a ${orgFilter}
-        `, params),
-        
-        // Donation trends (last 12 months)
-        query(`
+        `,
+        params
+      ),
+
+      // Donation trends (last 12 months)
+      query(
+        `
           SELECT 
             DATE_TRUNC('month', d.date) as month,
             SUM(d.amount) as monthly_donations,
@@ -104,10 +135,13 @@ export class MetricsService {
           WHERE d.date >= CURRENT_DATE - INTERVAL '12 months'
           GROUP BY DATE_TRUNC('month', d.date)
           ORDER BY month
-        `, params),
-        
-        // Resource utilization (volunteer hours vs capacity)
-        query(`
+        `,
+        params
+      ),
+
+      // Resource utilization (volunteer hours vs capacity)
+      query(
+        `
           SELECT 
             COUNT(DISTINCT v.id) as total_volunteers,
             COUNT(DISTINCT CASE WHEN v.active = true THEN v.id END) as active_volunteers,
@@ -117,23 +151,39 @@ export class MetricsService {
           LEFT JOIN shifts s ON v.id = s.volunteer_id 
           AND s.date >= DATE_TRUNC('month', CURRENT_DATE)
           ${orgFilter}
-        `, params)
-      ]);
+        `,
+        params
+      ),
+    ]);
 
     return {
       economicValue: parseFloat(volunteerValue.rows[0]?.economic_value || 0),
-      contributingVolunteers: parseInt(volunteerValue.rows[0]?.contributing_volunteers || 0),
+      contributingVolunteers: parseInt(
+        volunteerValue.rows[0]?.contributing_volunteers || 0
+      ),
       activityEfficiency: {
-        avgParticipants: parseFloat(activityEfficiency.rows[0]?.avg_participants_per_activity || 0),
-        totalActivities: parseInt(activityEfficiency.rows[0]?.total_activities || 0)
+        avgParticipants: parseFloat(
+          activityEfficiency.rows[0]?.avg_participants_per_activity || 0
+        ),
+        totalActivities: parseInt(
+          activityEfficiency.rows[0]?.total_activities || 0
+        ),
       },
       donationTrends: donationTrends.rows,
       resourceUtilization: {
-        totalVolunteers: parseInt(resourceUtilization.rows[0]?.total_volunteers || 0),
-        activeVolunteers: parseInt(resourceUtilization.rows[0]?.active_volunteers || 0),
-        hoursThisMonth: parseFloat(resourceUtilization.rows[0]?.total_hours_this_month || 0),
-        avgHoursPerShift: parseFloat(resourceUtilization.rows[0]?.avg_hours_per_shift || 0)
-      }
+        totalVolunteers: parseInt(
+          resourceUtilization.rows[0]?.total_volunteers || 0
+        ),
+        activeVolunteers: parseInt(
+          resourceUtilization.rows[0]?.active_volunteers || 0
+        ),
+        hoursThisMonth: parseFloat(
+          resourceUtilization.rows[0]?.total_hours_this_month || 0
+        ),
+        avgHoursPerShift: parseFloat(
+          resourceUtilization.rows[0]?.avg_hours_per_shift || 0
+        ),
+      },
     };
   }
 
@@ -142,10 +192,11 @@ export class MetricsService {
     const orgFilter = organization ? "WHERE organization = $1" : "";
     const params = organization ? [organization] : [];
 
-    const [volunteerHealth, programSustainability, riskIndicators] = 
+    const [volunteerHealth, programSustainability, riskIndicators] =
       await Promise.all([
         // Volunteer health indicators
-        query(`
+        query(
+          `
           WITH volunteer_stats AS (
             SELECT 
               v.id,
@@ -169,10 +220,13 @@ export class MetricsService {
             ROUND(AVG(total_hours), 1) as avg_hours_per_volunteer,
             ROUND(AVG(total_shifts), 1) as avg_shifts_per_volunteer
           FROM volunteer_stats
-        `, params),
-        
+        `,
+          params
+        ),
+
         // Program sustainability indicators
-        query(`
+        query(
+          `
           SELECT 
             COUNT(DISTINCT v.id) as total_volunteers,
             COUNT(DISTINCT CASE WHEN v.join_date >= CURRENT_DATE - INTERVAL '6 months' THEN v.id END) as new_volunteers_6m,
@@ -181,10 +235,13 @@ export class MetricsService {
             COALESCE(AVG(d.amount), 0) as avg_donation_amount
           FROM volunteers v
           LEFT JOIN donations d ON v.organization = d.organization ${orgFilter}
-        `, params),
-        
+        `,
+          params
+        ),
+
         // Risk indicators
-        query(`
+        query(
+          `
           SELECT 
             COUNT(CASE WHEN s.date < CURRENT_DATE - INTERVAL '90 days' THEN 1 END) as stale_shifts,
             COUNT(CASE WHEN d.date < CURRENT_DATE - INTERVAL '180 days' THEN 1 END) as stale_donations,
@@ -192,7 +249,9 @@ export class MetricsService {
           FROM shifts s
           FULL OUTER JOIN donations d ON s.organization = d.organization ${orgFilter}
           FULL OUTER JOIN activities a ON COALESCE(s.organization, d.organization) = a.organization ${orgFilter}
-        `, params)
+        `,
+          params
+        ),
       ]);
 
     return {
@@ -200,21 +259,37 @@ export class MetricsService {
         active: parseInt(volunteerHealth.rows[0]?.active_count || 0),
         atRisk: parseInt(volunteerHealth.rows[0]?.at_risk_count || 0),
         inactive: parseInt(volunteerHealth.rows[0]?.inactive_count || 0),
-        avgHoursPerVolunteer: parseFloat(volunteerHealth.rows[0]?.avg_hours_per_volunteer || 0),
-        avgShiftsPerVolunteer: parseFloat(volunteerHealth.rows[0]?.avg_shifts_per_volunteer || 0)
+        avgHoursPerVolunteer: parseFloat(
+          volunteerHealth.rows[0]?.avg_hours_per_volunteer || 0
+        ),
+        avgShiftsPerVolunteer: parseFloat(
+          volunteerHealth.rows[0]?.avg_shifts_per_volunteer || 0
+        ),
       },
       sustainability: {
-        totalVolunteers: parseInt(programSustainability.rows[0]?.total_volunteers || 0),
-        newVolunteers6m: parseInt(programSustainability.rows[0]?.new_volunteers_6m || 0),
-        newVolunteers12m: parseInt(programSustainability.rows[0]?.new_volunteers_12m || 0),
-        totalDonations: parseFloat(programSustainability.rows[0]?.total_donations || 0),
-        avgDonationAmount: parseFloat(programSustainability.rows[0]?.avg_donation_amount || 0)
+        totalVolunteers: parseInt(
+          programSustainability.rows[0]?.total_volunteers || 0
+        ),
+        newVolunteers6m: parseInt(
+          programSustainability.rows[0]?.new_volunteers_6m || 0
+        ),
+        newVolunteers12m: parseInt(
+          programSustainability.rows[0]?.new_volunteers_12m || 0
+        ),
+        totalDonations: parseFloat(
+          programSustainability.rows[0]?.total_donations || 0
+        ),
+        avgDonationAmount: parseFloat(
+          programSustainability.rows[0]?.avg_donation_amount || 0
+        ),
       },
       riskIndicators: {
         staleShifts: parseInt(riskIndicators.rows[0]?.stale_shifts || 0),
         staleDonations: parseInt(riskIndicators.rows[0]?.stale_donations || 0),
-        staleActivities: parseInt(riskIndicators.rows[0]?.stale_activities || 0)
-      }
+        staleActivities: parseInt(
+          riskIndicators.rows[0]?.stale_activities || 0
+        ),
+      },
     };
   }
 
@@ -229,7 +304,7 @@ export class MetricsService {
       avgHoursPerVolunteer: engagement.avgHoursPerVolunteer,
       economicValue: impact.economicValue,
       activeVolunteers: health.volunteerHealth.active,
-      atRiskVolunteers: health.volunteerHealth.atRisk
+      atRiskVolunteers: health.volunteerHealth.atRisk,
     };
   }
 
@@ -242,7 +317,7 @@ export class MetricsService {
       engagement,
       impact,
       health,
-      organization
+      organization,
     };
   }
 
@@ -254,7 +329,7 @@ export class MetricsService {
     return {
       engagement,
       impact,
-      health
+      health,
     };
   }
 }

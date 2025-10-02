@@ -59,18 +59,18 @@ router.get("/dashboard", async (req: Request, res: Response) => {
   try {
     const metricsService = new MetricsService();
     const organization = req.query.organization as string;
-    
+
     const [engagement, impact, health] = await Promise.all([
       metricsService.getEngagementMetrics(organization),
       metricsService.getImpactMetrics(organization),
-      metricsService.getHealthMetrics(organization)
+      metricsService.getHealthMetrics(organization),
     ]);
 
     res.json({
       engagement,
       impact,
       health,
-      organization: organization || 'all'
+      organization: organization || "all",
     });
   } catch (error) {
     console.error("Error getting dashboard metrics:", error);

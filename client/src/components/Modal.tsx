@@ -51,7 +51,8 @@ export default function Modal({
       <div
         className={styles.modalContent}
         style={{
-          maxWidth: size === "small" ? "400px" : size === "large" ? "800px" : "600px",
+          maxWidth:
+            size === "small" ? "400px" : size === "large" ? "800px" : "600px",
         }}
       >
         <div className={styles.modalHeader}>

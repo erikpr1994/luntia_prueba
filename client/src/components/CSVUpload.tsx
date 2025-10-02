@@ -47,9 +47,14 @@ const DATA_TYPE_OPTIONS: {
   },
 ];
 
-export default function CSVUpload({ dataType: propDataType, onUploadComplete }: CSVUploadProps) {
+export default function CSVUpload({
+  dataType: propDataType,
+  onUploadComplete,
+}: CSVUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [dataType, setDataType] = useState<DataType>(propDataType || "volunteers");
+  const [dataType, setDataType] = useState<DataType>(
+    propDataType || "volunteers"
+  );
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
