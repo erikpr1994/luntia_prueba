@@ -49,6 +49,20 @@ export default function Dashboard({ organization }: DashboardProps) {
     fetchData();
   }, [organization]);
 
+  // Format hours and minutes for display
+  const formatHoursMinutes = (hours: number): string => {
+    const wholeHours = Math.floor(hours);
+    const minutes = Math.round((hours - wholeHours) * 60);
+    
+    if (wholeHours === 0) {
+      return `${minutes}min`;
+    } else if (minutes === 0) {
+      return `${wholeHours}h`;
+    } else {
+      return `${wholeHours}h ${minutes}min`;
+    }
+  };
+
   // Prepare chart data - Volunteer activity over time from API
   const chartData = dailyActivity.map((item) => ({
     date: new Date(item.date).toLocaleDateString("es-ES", {
@@ -97,7 +111,7 @@ export default function Dashboard({ organization }: DashboardProps) {
         />
         <KPICard
           title="Promedio Horas/Voluntario"
-          value={basicMetrics.avgHoursPerVolunteer || 0}
+          value={formatHoursMinutes(basicMetrics.avgHoursPerVolunteer || 0)}
           subtitle="Horas promedio por voluntario"
           icon="⏰"
         />

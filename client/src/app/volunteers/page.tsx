@@ -42,6 +42,20 @@ export default function VolunteersPage() {
   const avgHours =
     activeVolunteers > 0 ? Math.round(totalHours / activeVolunteers) : 0;
 
+  // Format hours and minutes for display
+  const formatHoursMinutes = (hours: number): string => {
+    const wholeHours = Math.floor(hours);
+    const minutes = Math.round((hours - wholeHours) * 60);
+    
+    if (wholeHours === 0) {
+      return `${minutes}min`;
+    } else if (minutes === 0) {
+      return `${wholeHours}h`;
+    } else {
+      return `${wholeHours}h ${minutes}min`;
+    }
+  };
+
   const stats = (
     <>
       <KPICard
@@ -64,7 +78,7 @@ export default function VolunteersPage() {
       />
       <KPICard
         title="Promedio Horas"
-        value={avgHours.toLocaleString("es-ES")}
+        value={formatHoursMinutes(avgHours)}
         subtitle="Horas por voluntario"
         icon="📊"
       />
