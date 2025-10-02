@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { apiService, BasicMetrics, OverallStats } from "../lib/api";
+import { apiService, BasicMetrics, OverallStats, DailyActivity } from "../lib/api";
 import KPICard from "./KPICard";
 import Chart from "./Chart";
 import { LoadingState, ErrorState, EmptyState } from "./StateComponents";
@@ -14,6 +14,7 @@ interface DashboardProps {
 export default function Dashboard({ organization }: DashboardProps) {
   const [basicMetrics, setBasicMetrics] = useState<BasicMetrics | null>(null);
   const [overallStats, setOverallStats] = useState<OverallStats | null>(null);
+  const [dailyActivity, setDailyActivity] = useState<DailyActivity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,13 +23,15 @@ export default function Dashboard({ organization }: DashboardProps) {
       setLoading(true);
       setError(null);
 
-      const [basicMetricsData, overallStatsData] = await Promise.all([
+      const [basicMetricsData, overallStatsData, dailyActivityData] = await Promise.all([
         apiService.getBasicMetrics(),
         apiService.getOverallStats(),
+        apiService.getDailyVolunteerActivity(30, organization),
       ]);
 
       setBasicMetrics(basicMetricsData.metrics);
       setOverallStats(overallStatsData.stats);
+      setDailyActivity(dailyActivityData.activity);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
     } finally {
@@ -40,16 +43,16 @@ export default function Dashboard({ organization }: DashboardProps) {
     fetchData();
   }, [organization]);
 
-  // Prepare chart data
-  const chartData = overallStats
-    ? [
-        { name: "Voluntarios", value: overallStats.volunteers || 0 },
-        { name: "Miembros", value: overallStats.members || 0 },
-        { name: "Turnos", value: overallStats.shifts || 0 },
-        { name: "Donaciones", value: overallStats.donations || 0 },
-        { name: "Actividades", value: overallStats.activities || 0 },
-      ]
-    : [];
+  // Prepare chart data - Volunteer activity over time from API
+  const chartData = dailyActivity.map(item => ({
+    date: new Date(item.date).toLocaleDateString('es-ES', { 
+      month: 'short', 
+      day: 'numeric' 
+    }),
+    volunteers: item.volunteers,
+    hours: item.hours,
+    shifts: item.shifts,
+  }));
 
   if (loading) {
     return <LoadingState message="Cargando métricas del dashboard..." />;
@@ -113,7 +116,14 @@ export default function Dashboard({ organization }: DashboardProps) {
       </div>
 
       <div className={styles.chartGrid}>
-        <Chart title="Distribución por Categoría" data={chartData} />
+        <Chart 
+          title="Actividad de Voluntarios (Últimos 30 días)" 
+          data={chartData}
+          type="line"
+          dataKey="volunteers"
+          secondaryDataKey="shifts"
+          xAxisKey="date"
+        />
       </div>
     </div>
   );

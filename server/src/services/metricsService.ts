@@ -332,4 +332,29 @@ export class MetricsService {
       health,
     };
   }
+
+  // Daily volunteer activity for charts
+  async getDailyVolunteerActivity(days: number = 30, organization?: string) {
+    const orgFilter = organization ? "AND v.organization = $2" : "";
+    const params = organization ? [days, organization] : [days];
+
+    const result = await query(
+      `
+        SELECT 
+          s.date,
+          COUNT(DISTINCT s.volunteer_id) as volunteers,
+          COALESCE(SUM(s.hours), 0) as hours,
+          COUNT(s.id) as shifts
+        FROM shifts s
+        JOIN volunteers v ON s.volunteer_id = v.id
+        WHERE s.date >= CURRENT_DATE - INTERVAL '${days} days'
+        ${orgFilter}
+        GROUP BY s.date
+        ORDER BY s.date ASC
+      `,
+      params
+    );
+
+    return result.rows;
+  }
 }

@@ -17,6 +17,13 @@ export interface OverallStats {
   activities: number;
 }
 
+export interface DailyActivity {
+  date: string;
+  volunteers: number;
+  hours: number;
+  shifts: number;
+}
+
 class ApiService {
   private async request<T>(endpoint: string): Promise<T> {
     try {
@@ -40,6 +47,13 @@ class ApiService {
 
   async getOverallStats(): Promise<{ stats: OverallStats }> {
     return this.request<{ stats: OverallStats }>("/api/metrics/stats");
+  }
+
+  async getDailyVolunteerActivity(days: number = 30, organization?: string): Promise<{ activity: DailyActivity[] }> {
+    const queryParam = organization 
+      ? `?days=${days}&organization=${encodeURIComponent(organization)}`
+      : `?days=${days}`;
+    return this.request<{ activity: DailyActivity[] }>(`/api/metrics/daily-activity${queryParam}`);
   }
 
   async uploadCSV(
