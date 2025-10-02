@@ -1,21 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
 import {
-  LoadingState,
-  ErrorState,
   EmptyState,
+  ErrorState,
+  LoadingState,
 } from "../../components/StateComponents";
-import { apiService, Member } from "../../lib/api";
+import { apiService, type Member } from "../../lib/api";
 
 export default function MembersPage() {
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchMembers = async () => {
+  const fetchMembers = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -26,19 +26,19 @@ export default function MembersPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchMembers();
-  }, []);
+  }, [fetchMembers]);
 
   const totalMembers = members.length;
   const premiumMembers = members.filter(
-    (m) => m.monthly_contribution >= 75
+    (m) => m.monthly_contribution >= 75,
   ).length;
   const totalContributions = members.reduce(
     (sum, m) => sum + m.monthly_contribution,
-    0
+    0,
   );
   const avgContribution =
     totalMembers > 0 ? Math.round(totalContributions / totalMembers) : 0;
@@ -59,13 +59,19 @@ export default function MembersPage() {
       />
       <KPICard
         title="Contribución Total"
-        value={`$${totalContributions.toLocaleString()}`}
+        value={totalContributions.toLocaleString("es-ES", {
+          style: "currency",
+          currency: "EUR",
+        })}
         subtitle="Contribución mensual total"
         icon="💰"
       />
       <KPICard
         title="Contribución Promedio"
-        value={`$${avgContribution}`}
+        value={avgContribution.toLocaleString("es-ES", {
+          style: "currency",
+          currency: "EUR",
+        })}
         subtitle="Contribución promedio por socio"
         icon="📊"
       />
@@ -73,7 +79,7 @@ export default function MembersPage() {
   );
 
   const dataTable = (
-    <table className="dataTable">
+    <table className={styles.membersTable}>
       <thead>
         <tr>
           <th>Nombre</th>
@@ -86,14 +92,26 @@ export default function MembersPage() {
       <tbody>
         {members.map((member) => (
           <tr key={member.id}>
-            <td>{member.name}</td>
-            <td>{member.organization}</td>
-            <td>{new Date(member.join_date).toLocaleDateString("es-ES")}</td>
-            <td>${member.monthly_contribution.toLocaleString()}</td>
+            <td>
+              <span className={styles.memberName}>{member.name}</span>
+            </td>
+            <td>
+              <span className={styles.organization}>{member.organization}</span>
+            </td>
+            <td>
+              <span className={styles.joinDate}>
+                {new Date(member.join_date).toLocaleDateString("es-ES")}
+              </span>
+            </td>
+            <td>
+              <span className={styles.contribution}>
+                {member.monthly_contribution.toLocaleString("es-ES", { style: "currency", currency: "EUR" })}
+              </span>
+            </td>
             <td>
               <span
-                className={`membership ${
-                  member.monthly_contribution >= 75 ? "premium" : "basic"
+                className={`${styles.membership} ${
+                  member.monthly_contribution >= 75 ? styles.premium : styles.basic
                 }`}
               >
                 {member.monthly_contribution >= 75 ? "Premium" : "Básico"}

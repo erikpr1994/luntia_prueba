@@ -1,0 +1,165 @@
+.membersTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.membersTable th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+  padding: 16px 12px;
+  text-align: left;
+  border-bottom: 2px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.membersTable td {
+  color: #4b5563;
+  font-size: 14px;
+  padding: 16px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.membersTable tr:hover {
+  background: #f8fafc;
+  transition: background-color 0.2s ease;
+}
+
+.membersTable tr:last-child td {
+  border-bottom: none;
+}
+
+/* Member name styling */
+.memberName {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Organization styling */
+.organization {
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+/* Date styling */
+.joinDate {
+  color: #6b7280;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas,
+    "Courier New", monospace;
+  font-size: 13px;
+}
+
+/* Contribution styling */
+.contribution {
+  color: #059669;
+  font-weight: 500;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas,
+    "Courier New", monospace;
+}
+
+/* Membership type styling */
+.membership {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.membership.premium {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #f59e0b;
+}
+
+.membership.basic {
+  background: #e0e7ff;
+  color: #3730a3;
+  border: 1px solid #6366f1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .membersTable {
+    font-size: 12px;
+  }
+  
+  .membersTable th,
+  .membersTable td {
+    padding: 12px 8px;
+  }
+  
+  .membersTable th:nth-child(2),
+  .membersTable td:nth-child(2) {
+    display: none; /* Hide organization on mobile */
+  }
+}
+
+@media (max-width: 640px) {
+  .membersTable th:nth-child(3),
+  .membersTable td:nth-child(3) {
+    display: none; /* Hide join date on very small screens */
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .membersTable {
+    background: #1f2937;
+  }
+  
+  .membersTable th {
+    background: #374151;
+    color: #f3f4f6;
+    border-bottom-color: #4b5563;
+  }
+  
+  .membersTable td {
+    color: #d1d5db;
+    border-bottom-color: #374151;
+  }
+  
+  .membersTable tr:hover {
+    background: #374151;
+  }
+  
+  .memberName {
+    color: #f9fafb;
+  }
+  
+  .organization {
+    color: #60a5fa;
+  }
+  
+  .joinDate {
+    color: #9ca3af;
+  }
+  
+  .contribution {
+    color: #34d399;
+  }
+  
+  .membership.premium {
+    background: #451a03;
+    color: #fbbf24;
+    border-color: #f59e0b;
+  }
+  
+  .membership.basic {
+    background: #1e1b4b;
+    color: #a5b4fc;
+    border-color: #6366f1;
+  }
+}
