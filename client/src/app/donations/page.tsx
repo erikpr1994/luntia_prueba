@@ -34,12 +34,11 @@ export default function DonationsPage() {
 
   const totalDonations = donations.length;
   const totalAmount = donations.reduce(
-    (sum, donation) => sum + parseFloat(donation.amount?.toString() || '0'),
+    (sum, donation) => sum + parseFloat(donation.amount?.toString() || "0"),
     0
   );
   const uniqueDonors = new Set(donations.map((d) => d.donor)).size;
-  const avgDonation =
-    totalDonations > 0 ? totalAmount / totalDonations : 0;
+  const avgDonation = totalDonations > 0 ? totalAmount / totalDonations : 0;
 
   // Get recent donations (last 7 days)
   const recentDonations = donations.filter((d) => {
@@ -49,7 +48,7 @@ export default function DonationsPage() {
     return donationDate >= sevenDaysAgo;
   });
   const recentAmount = recentDonations.reduce(
-    (sum, donation) => sum + parseFloat(donation.amount?.toString() || '0'),
+    (sum, donation) => sum + parseFloat(donation.amount?.toString() || "0"),
     0
   );
 
@@ -57,13 +56,19 @@ export default function DonationsPage() {
     <>
       <KPICard
         title="Total Donaciones"
-        value={`$${totalAmount.toLocaleString()}`}
+        value={totalAmount.toLocaleString("es-ES", {
+          style: "currency",
+          currency: "EUR",
+        })}
         subtitle="Monto recaudado"
         icon="💰"
       />
       <KPICard
         title="Esta Semana"
-        value={`$${recentAmount.toLocaleString()}`}
+        value={recentAmount.toLocaleString("es-ES", {
+          style: "currency",
+          currency: "EUR",
+        })}
         subtitle="Recaudado en últimos 7 días"
         icon="📈"
       />
@@ -75,7 +80,10 @@ export default function DonationsPage() {
       />
       <KPICard
         title="Donación Promedio"
-        value={`$${avgDonation.toLocaleString()}`}
+        value={avgDonation.toLocaleString("es-ES", {
+          style: "currency",
+          currency: "EUR",
+        })}
         subtitle="Por donación"
         icon="📊"
       />
@@ -98,15 +106,24 @@ export default function DonationsPage() {
           <tr key={donation.id}>
             <td>{donation.donor}</td>
             <td>{donation.organization}</td>
-            <td>{parseFloat(donation.amount?.toString() || '0').toLocaleString("es-ES", { style: "currency", currency: "EUR" })}</td>
+            <td>
+              {parseFloat(donation.amount?.toString() || "0").toLocaleString(
+                "es-ES",
+                { style: "currency", currency: "EUR" }
+              )}
+            </td>
             <td>{new Date(donation.date).toLocaleDateString("es-ES")}</td>
             <td>
               <span
                 className={`donation-type ${
-                  parseFloat(donation.amount?.toString() || '0') >= 1000 ? "major" : "standard"
+                  parseFloat(donation.amount?.toString() || "0") >= 1000
+                    ? "major"
+                    : "standard"
                 }`}
               >
-                {parseFloat(donation.amount?.toString() || '0') >= 1000 ? "Mayor" : "Estándar"}
+                {parseFloat(donation.amount?.toString() || "0") >= 1000
+                  ? "Mayor"
+                  : "Estándar"}
               </span>
             </td>
           </tr>
