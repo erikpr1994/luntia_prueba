@@ -109,7 +109,10 @@ export default function Dashboard({ organization }: DashboardProps) {
         />
         <KPICard
           title="Valor Económico"
-          value={`$${(basicMetrics.economicValue || 0).toLocaleString()}`}
+          value={`${(basicMetrics.economicValue || 0).toLocaleString("es-ES", {
+            style: "currency",
+            currency: "EUR",
+          })}`}
           subtitle="Valor del trabajo voluntario"
           icon="💰"
         />
