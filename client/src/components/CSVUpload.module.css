@@ -1,0 +1,318 @@
+.uploadContainer {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+.uploadTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 16px 0;
+}
+
+.uploadDescription {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 20px 0;
+}
+
+.dropZone {
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #f9fafb;
+}
+
+.dropZone:hover {
+  border-color: #3b82f6;
+  background: #f0f9ff;
+}
+
+.dropZone.dragActive {
+  border-color: #3b82f6;
+  background: #f0f9ff;
+}
+
+.dropZoneIcon {
+  font-size: 48px;
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
+.dropZoneText {
+  font-size: 16px;
+  color: #374151;
+  margin: 0 0 8px 0;
+}
+
+.dropZoneSubtext {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.fileInput {
+  display: none;
+}
+
+.dataTypeSelector {
+  margin-bottom: 20px;
+}
+
+.selectorLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin: 0 0 8px 0;
+  display: block;
+}
+
+.selector {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  font-size: 14px;
+  color: #374151;
+}
+
+.selector:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.uploadButton {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.uploadButton:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.uploadButton:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.progressContainer {
+  margin-top: 16px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #3b82f6;
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 4px 0 0 0;
+  text-align: center;
+}
+
+.resultContainer {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.resultSuccess {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.resultError {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+.resultTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.resultMessage {
+  font-size: 14px;
+  margin: 0;
+}
+
+.fileInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.fileIcon {
+  font-size: 24px;
+  color: #3b82f6;
+}
+
+.fileDetails {
+  flex: 1;
+}
+
+.fileName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.fileSize {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.removeButton:hover {
+  background: #fef2f2;
+}
+
+.toggleHelpButton {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+  margin-top: 8px;
+  padding: 0;
+}
+
+.toggleHelpButton:hover {
+  color: #3b82f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .uploadContainer {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .uploadTitle {
+    color: #f9fafb;
+  }
+
+  .uploadDescription {
+    color: #9ca3af;
+  }
+
+  .dropZone {
+    border-color: #4b5563;
+    background: #111827;
+  }
+
+  .dropZone:hover {
+    border-color: #3b82f6;
+    background: #1e3a8a;
+  }
+
+  .dropZone.dragActive {
+    border-color: #3b82f6;
+    background: #1e3a8a;
+  }
+
+  .dropZoneIcon {
+    color: #6b7280;
+  }
+
+  .dropZoneText {
+    color: #f3f4f6;
+  }
+
+  .dropZoneSubtext {
+    color: #9ca3af;
+  }
+
+  .selectorLabel {
+    color: #f3f4f6;
+  }
+
+  .selector {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f3f4f6;
+  }
+
+  .selector:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .fileInfo {
+    background: #374151;
+  }
+
+  .fileName {
+    color: #f9fafb;
+  }
+
+  .fileSize {
+    color: #9ca3af;
+  }
+
+  .resultSuccess {
+    background: #064e3b;
+    border-color: #065f46;
+    color: #6ee7b7;
+  }
+
+  .resultError {
+    background: #7f1d1d;
+    border-color: #991b1b;
+    color: #fca5a5;
+  }
+
+  .toggleHelpButton {
+    color: #9ca3af;
+  }
+
+  .toggleHelpButton:hover {
+    color: #60a5fa;
+  }
+}
