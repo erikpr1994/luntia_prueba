@@ -335,6 +335,7 @@ export class MetricsService {
 
   // Daily volunteer activity for charts
   async getDailyVolunteerActivity(days: number = 30, organization?: string) {
+    // For now, let's get all shifts to debug the issue
     let queryText: string;
     let params: any[];
 
@@ -347,12 +348,11 @@ export class MetricsService {
           COUNT(s.id) as shifts
         FROM shifts s
         JOIN volunteers v ON s.volunteer_id = v.id
-        WHERE s.date >= CURRENT_DATE - INTERVAL '1 day' * $1
-        AND v.organization = $2
+        WHERE v.organization = $1
         GROUP BY s.date
         ORDER BY s.date ASC
       `;
-      params = [days, organization];
+      params = [organization];
     } else {
       queryText = `
         SELECT 
@@ -362,14 +362,18 @@ export class MetricsService {
           COUNT(s.id) as shifts
         FROM shifts s
         JOIN volunteers v ON s.volunteer_id = v.id
-        WHERE s.date >= CURRENT_DATE - INTERVAL '1 day' * $1
         GROUP BY s.date
         ORDER BY s.date ASC
       `;
-      params = [days];
+      params = [];
     }
 
+    console.log('Executing query:', queryText);
+    console.log('With params:', params);
+    
     const result = await query(queryText, params);
+    console.log('Query result:', result.rows);
+    
     return result.rows;
   }
 }
