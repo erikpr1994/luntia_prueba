@@ -3,10 +3,13 @@
 import { useState, useEffect } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
-import LoadingState from "../../components/LoadingState";
-import ErrorState from "../../components/ErrorState";
-import EmptyState from "../../components/EmptyState";
+import {
+  LoadingState,
+  ErrorState,
+  EmptyState,
+} from "../../components/StateComponents";
 import { apiService, Volunteer } from "../../lib/api";
+import styles from "../../components/VolunteersTable.module.css";
 
 export default function VolunteersPage() {
   const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
@@ -30,13 +33,14 @@ export default function VolunteersPage() {
     fetchVolunteers();
   }, []);
 
-  const activeVolunteers = volunteers.filter(v => v.active).length;
+  const activeVolunteers = volunteers.filter((v) => v.active).length;
   const totalHours = volunteers.reduce((sum, v) => {
     // Calculate hours from shifts - this would need to be calculated from shifts data
     // For now, we'll use a placeholder calculation
     return sum + (v.active ? Math.floor(Math.random() * 50) + 10 : 0);
   }, 0);
-  const avgHours = activeVolunteers > 0 ? Math.round(totalHours / activeVolunteers) : 0;
+  const avgHours =
+    activeVolunteers > 0 ? Math.round(totalHours / activeVolunteers) : 0;
 
   const stats = (
     <>
@@ -54,13 +58,13 @@ export default function VolunteersPage() {
       />
       <KPICard
         title="Horas Totales"
-        value={totalHours.toLocaleString()}
+        value={totalHours.toLocaleString("es-ES")}
         subtitle="Horas trabajadas"
         icon="⏰"
       />
       <KPICard
         title="Promedio Horas"
-        value={avgHours.toString()}
+        value={avgHours.toLocaleString("es-ES")}
         subtitle="Horas por voluntario"
         icon="📊"
       />
@@ -68,7 +72,7 @@ export default function VolunteersPage() {
   );
 
   const dataTable = (
-    <table className="dataTable">
+    <table className={styles.volunteersTable}>
       <thead>
         <tr>
           <th>Nombre</th>
@@ -81,13 +85,29 @@ export default function VolunteersPage() {
       <tbody>
         {volunteers.map((volunteer) => (
           <tr key={volunteer.id}>
-            <td>{volunteer.name}</td>
-            <td>{volunteer.organization}</td>
-            <td>{volunteer.role}</td>
-            <td>{new Date(volunteer.join_date).toLocaleDateString('es-ES')}</td>
             <td>
-              <span className={`status ${volunteer.active ? 'active' : 'inactive'}`}>
-                {volunteer.active ? 'Activo' : 'Inactivo'}
+              <span className={styles.volunteerName}>{volunteer.name}</span>
+            </td>
+            <td>
+              <span className={styles.organization}>
+                {volunteer.organization}
+              </span>
+            </td>
+            <td>
+              <span className={styles.role}>{volunteer.role}</span>
+            </td>
+            <td>
+              <span className={styles.joinDate}>
+                {new Date(volunteer.join_date).toLocaleDateString("es-ES")}
+              </span>
+            </td>
+            <td>
+              <span
+                className={`${styles.status} ${
+                  volunteer.active ? styles.active : styles.inactive
+                }`}
+              >
+                {volunteer.active ? "Activo" : "Inactivo"}
               </span>
             </td>
           </tr>
@@ -100,7 +120,7 @@ export default function VolunteersPage() {
     <EmptyState
       icon="👥"
       title="No hay voluntarios registrados"
-      description="Sube un archivo CSV con datos de voluntarios para comenzar"
+      message="Sube un archivo CSV con datos de voluntarios para comenzar"
     />
   );
 

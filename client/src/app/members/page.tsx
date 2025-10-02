@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
-import LoadingState from "../../components/LoadingState";
-import ErrorState from "../../components/ErrorState";
-import EmptyState from "../../components/EmptyState";
+import {
+  LoadingState,
+  ErrorState,
+  EmptyState,
+} from "../../components/StateComponents";
 import { apiService, Member } from "../../lib/api";
 
 export default function MembersPage() {
@@ -31,9 +33,15 @@ export default function MembersPage() {
   }, []);
 
   const totalMembers = members.length;
-  const premiumMembers = members.filter(m => m.monthly_contribution >= 75).length;
-  const totalContributions = members.reduce((sum, m) => sum + m.monthly_contribution, 0);
-  const avgContribution = totalMembers > 0 ? Math.round(totalContributions / totalMembers) : 0;
+  const premiumMembers = members.filter(
+    (m) => m.monthly_contribution >= 75
+  ).length;
+  const totalContributions = members.reduce(
+    (sum, m) => sum + m.monthly_contribution,
+    0
+  );
+  const avgContribution =
+    totalMembers > 0 ? Math.round(totalContributions / totalMembers) : 0;
 
   const stats = (
     <>
@@ -80,11 +88,15 @@ export default function MembersPage() {
           <tr key={member.id}>
             <td>{member.name}</td>
             <td>{member.organization}</td>
-            <td>{new Date(member.join_date).toLocaleDateString('es-ES')}</td>
+            <td>{new Date(member.join_date).toLocaleDateString("es-ES")}</td>
             <td>${member.monthly_contribution.toLocaleString()}</td>
             <td>
-              <span className={`membership ${member.monthly_contribution >= 75 ? 'premium' : 'basic'}`}>
-                {member.monthly_contribution >= 75 ? 'Premium' : 'Básico'}
+              <span
+                className={`membership ${
+                  member.monthly_contribution >= 75 ? "premium" : "basic"
+                }`}
+              >
+                {member.monthly_contribution >= 75 ? "Premium" : "Básico"}
               </span>
             </td>
           </tr>
@@ -97,7 +109,7 @@ export default function MembersPage() {
     <EmptyState
       icon="👤"
       title="No hay socios registrados"
-      description="Sube un archivo CSV con datos de socios para comenzar"
+      message="Sube un archivo CSV con datos de socios para comenzar"
     />
   );
 

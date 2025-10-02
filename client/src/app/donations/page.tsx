@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
-import LoadingState from "../../components/LoadingState";
-import ErrorState from "../../components/ErrorState";
-import EmptyState from "../../components/EmptyState";
+import {
+  LoadingState,
+  ErrorState,
+  EmptyState,
+} from "../../components/StateComponents";
 import { apiService, Donation } from "../../lib/api";
 
 export default function DonationsPage() {
@@ -31,18 +33,25 @@ export default function DonationsPage() {
   }, []);
 
   const totalDonations = donations.length;
-  const totalAmount = donations.reduce((sum, donation) => sum + donation.amount, 0);
-  const uniqueDonors = new Set(donations.map(d => d.donor)).size;
-  const avgDonation = totalDonations > 0 ? Math.round(totalAmount / totalDonations) : 0;
+  const totalAmount = donations.reduce(
+    (sum, donation) => sum + donation.amount,
+    0
+  );
+  const uniqueDonors = new Set(donations.map((d) => d.donor)).size;
+  const avgDonation =
+    totalDonations > 0 ? Math.round(totalAmount / totalDonations) : 0;
 
   // Get recent donations (last 7 days)
-  const recentDonations = donations.filter(d => {
+  const recentDonations = donations.filter((d) => {
     const donationDate = new Date(d.date);
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     return donationDate >= sevenDaysAgo;
   });
-  const recentAmount = recentDonations.reduce((sum, donation) => sum + donation.amount, 0);
+  const recentAmount = recentDonations.reduce(
+    (sum, donation) => sum + donation.amount,
+    0
+  );
 
   const stats = (
     <>
@@ -90,10 +99,14 @@ export default function DonationsPage() {
             <td>{donation.donor}</td>
             <td>{donation.organization}</td>
             <td>${donation.amount.toLocaleString()}</td>
-            <td>{new Date(donation.date).toLocaleDateString('es-ES')}</td>
+            <td>{new Date(donation.date).toLocaleDateString("es-ES")}</td>
             <td>
-              <span className={`donation-type ${donation.amount >= 1000 ? 'major' : 'standard'}`}>
-                {donation.amount >= 1000 ? 'Mayor' : 'Estándar'}
+              <span
+                className={`donation-type ${
+                  donation.amount >= 1000 ? "major" : "standard"
+                }`}
+              >
+                {donation.amount >= 1000 ? "Mayor" : "Estándar"}
               </span>
             </td>
           </tr>
@@ -106,7 +119,7 @@ export default function DonationsPage() {
     <EmptyState
       icon="💰"
       title="No hay donaciones registradas"
-      description="Sube un archivo CSV con datos de donaciones para comenzar"
+      message="Sube un archivo CSV con datos de donaciones para comenzar"
     />
   );
 

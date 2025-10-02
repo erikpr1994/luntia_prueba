@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
-import LoadingState from "../../components/LoadingState";
-import ErrorState from "../../components/ErrorState";
-import EmptyState from "../../components/EmptyState";
+import {
+  LoadingState,
+  ErrorState,
+  EmptyState,
+} from "../../components/StateComponents";
 import { apiService, Shift } from "../../lib/api";
 
 export default function ShiftsPage() {
@@ -32,8 +34,9 @@ export default function ShiftsPage() {
 
   const totalShifts = shifts.length;
   const totalHours = shifts.reduce((sum, shift) => sum + shift.hours, 0);
-  const avgHoursPerShift = totalShifts > 0 ? Math.round((totalHours / totalShifts) * 10) / 10 : 0;
-  const uniqueVolunteers = new Set(shifts.map(s => s.volunteer_id)).size;
+  const avgHoursPerShift =
+    totalShifts > 0 ? Math.round((totalHours / totalShifts) * 10) / 10 : 0;
+  const uniqueVolunteers = new Set(shifts.map((s) => s.volunteer_id)).size;
 
   const stats = (
     <>
@@ -78,9 +81,11 @@ export default function ShiftsPage() {
       <tbody>
         {shifts.map((shift) => (
           <tr key={shift.id}>
-            <td>{shift.volunteer_name || `Voluntario ${shift.volunteer_id}`}</td>
+            <td>
+              {shift.volunteer_name || `Voluntario ${shift.volunteer_id}`}
+            </td>
             <td>{shift.organization}</td>
-            <td>{new Date(shift.date).toLocaleDateString('es-ES')}</td>
+            <td>{new Date(shift.date).toLocaleDateString("es-ES")}</td>
             <td>{shift.activity}</td>
             <td>{shift.hours}h</td>
           </tr>
@@ -93,7 +98,7 @@ export default function ShiftsPage() {
     <EmptyState
       icon="📅"
       title="No hay turnos registrados"
-      description="Sube un archivo CSV con datos de turnos para comenzar"
+      message="Sube un archivo CSV con datos de turnos para comenzar"
     />
   );
 

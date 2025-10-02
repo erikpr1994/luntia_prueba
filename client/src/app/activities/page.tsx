@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
-import LoadingState from "../../components/LoadingState";
-import ErrorState from "../../components/ErrorState";
-import EmptyState from "../../components/EmptyState";
+import {
+  LoadingState,
+  ErrorState,
+  EmptyState,
+} from "../../components/StateComponents";
 import { apiService, Activity } from "../../lib/api";
 
 export default function ActivitiesPage() {
@@ -31,12 +33,17 @@ export default function ActivitiesPage() {
   }, []);
 
   const totalActivities = activities.length;
-  const totalParticipants = activities.reduce((sum, activity) => sum + activity.participants, 0);
-  const avgParticipants = totalActivities > 0 ? Math.round(totalParticipants / totalActivities) : 0;
-  const uniqueOrganizations = new Set(activities.map(a => a.organization)).size;
+  const totalParticipants = activities.reduce(
+    (sum, activity) => sum + activity.participants,
+    0
+  );
+  const avgParticipants =
+    totalActivities > 0 ? Math.round(totalParticipants / totalActivities) : 0;
+  const uniqueOrganizations = new Set(activities.map((a) => a.organization))
+    .size;
 
   // Get recent activities (last 7 days)
-  const recentActivities = activities.filter(a => {
+  const recentActivities = activities.filter((a) => {
     const activityDate = new Date(a.date);
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -88,11 +95,15 @@ export default function ActivitiesPage() {
           <tr key={activity.id}>
             <td>{activity.name}</td>
             <td>{activity.organization}</td>
-            <td>{new Date(activity.date).toLocaleDateString('es-ES')}</td>
+            <td>{new Date(activity.date).toLocaleDateString("es-ES")}</td>
             <td>{activity.participants}</td>
             <td>
-              <span className={`activity-type ${activity.participants >= 50 ? 'large' : 'standard'}`}>
-                {activity.participants >= 50 ? 'Gran Evento' : 'Estándar'}
+              <span
+                className={`activity-type ${
+                  activity.participants >= 50 ? "large" : "standard"
+                }`}
+              >
+                {activity.participants >= 50 ? "Gran Evento" : "Estándar"}
               </span>
             </td>
           </tr>
@@ -105,7 +116,7 @@ export default function ActivitiesPage() {
     <EmptyState
       icon="🎯"
       title="No hay actividades registradas"
-      description="Sube un archivo CSV con datos de actividades para comenzar"
+      message="Sube un archivo CSV con datos de actividades para comenzar"
     />
   );
 
