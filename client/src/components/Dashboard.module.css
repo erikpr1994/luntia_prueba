@@ -34,6 +34,150 @@
   gap: 24px;
 }
 
+/* Advanced Dashboard Styles */
+.metricsSection {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kpiCard {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.kpiCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.kpiValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 8px;
+}
+
+.kpiLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.kpiSubtext {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.topPerformers {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.topPerformers h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 16px 0;
+}
+
+.performersList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.performerCard {
+  background: #f3f4f6;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+
+.performerName {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.performerRole {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.performerStats {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.riskIndicators {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #fecaca;
+  background: #fef2f2;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.riskIndicators h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #dc2626;
+  margin: 0 0 16px 0;
+}
+
+.riskGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.riskCard {
+  background: white;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+
+.riskValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: #dc2626;
+  margin-bottom: 4px;
+}
+
+.riskLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #991b1b;
+  margin-bottom: 2px;
+}
+
+.riskSubtext {
+  font-size: 10px;
+  color: #b91c1c;
+}
+
 @media (max-width: 768px) {
   .dashboard {
     padding: 16px;
@@ -48,6 +192,18 @@
     grid-template-columns: 1fr;
     gap: 16px;
   }
+
+  .metricsSection {
+    padding: 16px;
+  }
+
+  .performersList {
+    grid-template-columns: 1fr;
+  }
+
+  .riskGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -61,5 +217,81 @@
 
   .subtitle {
     color: #9ca3af;
+  }
+
+  .metricsSection {
+    background: #1f2937;
+    border: 1px solid #374151;
+  }
+
+  .sectionTitle {
+    color: #f9fafb;
+  }
+
+  .kpiCard {
+    background: #374151;
+    border-color: #4b5563;
+  }
+
+  .kpiValue {
+    color: #60a5fa;
+  }
+
+  .kpiLabel {
+    color: #d1d5db;
+  }
+
+  .kpiSubtext {
+    color: #9ca3af;
+  }
+
+  .topPerformers {
+    border-color: #4b5563;
+  }
+
+  .topPerformers h3 {
+    color: #f9fafb;
+  }
+
+  .performerCard {
+    background: #4b5563;
+  }
+
+  .performerName {
+    color: #f9fafb;
+  }
+
+  .performerRole {
+    color: #9ca3af;
+  }
+
+  .performerStats {
+    color: #6b7280;
+  }
+
+  .riskIndicators {
+    background: #7f1d1d;
+    border-color: #dc2626;
+  }
+
+  .riskIndicators h3 {
+    color: #fca5a5;
+  }
+
+  .riskCard {
+    background: #991b1b;
+    border-color: #dc2626;
+  }
+
+  .riskValue {
+    color: #fca5a5;
+  }
+
+  .riskLabel {
+    color: #fecaca;
+  }
+
+  .riskSubtext {
+    color: #fca5a5;
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import { apiService } from "../lib/api";
 import CSVFormatHelp from "./CSVFormatHelp";
 import styles from "./CSVUpload.module.css";
@@ -12,6 +12,7 @@ interface UploadResult {
 }
 
 interface CSVUploadProps {
+  dataType?: DataType;
   onUploadComplete?: () => void;
 }
 
@@ -46,9 +47,9 @@ const DATA_TYPE_OPTIONS: {
   },
 ];
 
-export default function CSVUpload({ onUploadComplete }: CSVUploadProps) {
+export default function CSVUpload({ dataType: propDataType, onUploadComplete }: CSVUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [dataType, setDataType] = useState<DataType>("volunteers");
+  const [dataType, setDataType] = useState<DataType>(propDataType || "volunteers");
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -111,6 +112,13 @@ export default function CSVUpload({ onUploadComplete }: CSVUploadProps) {
     },
     []
   );
+
+  // Update dataType when prop changes
+  useEffect(() => {
+    if (propDataType) {
+      setDataType(propDataType);
+    }
+  }, [propDataType]);
 
   const handleUpload = useCallback(async () => {
     if (!selectedFile) return;
@@ -208,23 +216,25 @@ export default function CSVUpload({ onUploadComplete }: CSVUploadProps) {
         donaciones o actividades.
       </p>
 
-      <div className={styles.dataTypeSelector}>
-        <label htmlFor="dataType" className={styles.selectorLabel}>
-          Tipo de datos
-        </label>
-        <select
-          id="dataType"
-          value={dataType}
-          onChange={handleDataTypeChange}
-          className={styles.selector}
-        >
-          {DATA_TYPE_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label} - {option.description}
-            </option>
-          ))}
-        </select>
-      </div>
+      {!propDataType && (
+        <div className={styles.dataTypeSelector}>
+          <label htmlFor="dataType" className={styles.selectorLabel}>
+            Tipo de datos
+          </label>
+          <select
+            id="dataType"
+            value={dataType}
+            onChange={handleDataTypeChange}
+            className={styles.selector}
+          >
+            {DATA_TYPE_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label} - {option.description}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div
         className={`${styles.dropZone} ${isDragging ? styles.dragActive : ""}`}
