@@ -1,0 +1,61 @@
+id,organization,name,join_date,active,role
+v001,Green Earth Foundation,Alice Johnson,2023-01-15,true,Coordinator
+v002,Green Earth Foundation,Bob Smith,2023-02-20,true,Volunteer
+v003,Green Earth Foundation,Carol Davis,2023-03-10,true,Volunteer
+v004,Green Earth Foundation,David Wilson,2023-04-05,false,Volunteer
+v005,Green Earth Foundation,Eva Martinez,2023-05-12,true,Team Leader
+v006,Green Earth Foundation,Frank Brown,2023-06-18,true,Volunteer
+v007,Green Earth Foundation,Grace Lee,2023-07-22,true,Volunteer
+v008,Green Earth Foundation,Henry Taylor,2023-08-30,false,Volunteer
+v009,Green Earth Foundation,Iris Chen,2023-09-14,true,Volunteer
+v010,Green Earth Foundation,Jack Anderson,2023-10-08,true,Volunteer
+v011,Green Earth Foundation,Karen White,2023-11-25,true,Volunteer
+v012,Green Earth Foundation,Luis Garcia,2023-12-03,false,Volunteer
+v013,Green Earth Foundation,Maria Rodriguez,2024-01-10,true,Coordinator
+v014,Green Earth Foundation,Nick Thompson,2024-02-15,true,Volunteer
+v015,Green Earth Foundation,Olga Petrov,2024-03-20,true,Volunteer
+v016,Green Earth Foundation,Paul Miller,2024-04-12,true,Volunteer
+v017,Green Earth Foundation,Quinn Johnson,2024-05-18,false,Volunteer
+v018,Green Earth Foundation,Rachel Green,2024-06-22,true,Team Leader
+v019,Green Earth Foundation,Sam Wilson,2024-07-30,true,Volunteer
+v020,Green Earth Foundation,Tina Davis,2024-08-14,true,Volunteer
+v021,Community Help Center,Alex Rivera,2023-01-08,true,Coordinator
+v022,Community Help Center,Beth Cooper,2023-02-14,true,Volunteer
+v023,Community Help Center,Chris Murphy,2023-03-25,true,Volunteer
+v024,Community Help Center,Diana Foster,2023-04-18,true,Volunteer
+v025,Community Help Center,Eddie Torres,2023-05-30,false,Volunteer
+v026,Community Help Center,Fiona Walsh,2023-06-12,true,Team Leader
+v027,Community Help Center,George Kim,2023-07-08,true,Volunteer
+v028,Community Help Center,Helen Scott,2023-08-20,true,Volunteer
+v029,Community Help Center,Ivan Patel,2023-09-15,true,Volunteer
+v030,Community Help Center,Jenny Liu,2023-10-28,true,Volunteer
+v031,Community Help Center,Kevin Young,2023-11-10,false,Volunteer
+v032,Community Help Center,Lisa Adams,2023-12-22,true,Volunteer
+v033,Community Help Center,Mike Johnson,2024-01-05,true,Coordinator
+v034,Community Help Center,Nina Singh,2024-02-18,true,Volunteer
+v035,Community Help Center,Oscar Brown,2024-03-12,true,Volunteer
+v036,Community Help Center,Paula Clark,2024-04-25,true,Volunteer
+v037,Community Help Center,Raymond Lewis,2024-05-08,false,Volunteer
+v038,Community Help Center,Sarah Walker,2024-06-30,true,Team Leader
+v039,Community Help Center,Tom Hall,2024-07-15,true,Volunteer
+v040,Community Help Center,Una Martinez,2024-08-28,true,Volunteer
+v041,Food Bank Network,Vicente Cruz,2023-01-12,true,Coordinator
+v042,Food Bank Network,Wendy Price,2023-02-28,true,Volunteer
+v043,Food Bank Network,Xavier Reed,2023-03-18,true,Volunteer
+v044,Food Bank Network,Yolanda Bell,2023-04-22,true,Volunteer
+v045,Food Bank Network,Zachary King,2023-05-15,false,Volunteer
+v046,Food Bank Network,Amanda Wright,2023-06-08,true,Team Leader
+v047,Food Bank Network,Brian Lopez,2023-07-25,true,Volunteer
+v048,Food Bank Network,Catherine Hill,2023-08-12,true,Volunteer
+v049,Food Bank Network,Daniel Green,2023-09-28,true,Volunteer
+v050,Food Bank Network,Elizabeth Baker,2023-10-15,true,Volunteer
+v051,Food Bank Network,Frederick Nelson,2023-11-20,false,Volunteer
+v052,Food Bank Network,Gabriela Carter,2023-12-08,true,Volunteer
+v053,Food Bank Network,Hector Mitchell,2024-01-18,true,Coordinator
+v054,Food Bank Network,Isabella Perez,2024-02-25,true,Volunteer
+v055,Food Bank Network,Jacob Roberts,2024-03-15,true,Volunteer
+v056,Food Bank Network,Katherine Turner,2024-04-08,true,Volunteer
+v057,Food Bank Network,Lawrence Phillips,2024-05-22,false,Volunteer
+v058,Food Bank Network,Michelle Campbell,2024-06-12,true,Team Leader
+v059,Food Bank Network,Nicholas Parker,2024-07-28,true,Volunteer
+v060,Food Bank Network,Olivia Evans,2024-08-15,true,Volunteer

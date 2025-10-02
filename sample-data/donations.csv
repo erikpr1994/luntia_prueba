@@ -1,0 +1,91 @@
+id,organization,date,donor,amount
+d001,Green Earth Foundation,2024-09-01,ABC Corporation,5000.00
+d002,Green Earth Foundation,2024-09-01,John and Mary Smith,250.00
+d003,Green Earth Foundation,2024-09-02,XYZ Foundation,10000.00
+d004,Green Earth Foundation,2024-09-02,Local Business Association,1500.00
+d005,Green Earth Foundation,2024-09-03,Anonymous Donor,500.00
+d006,Green Earth Foundation,2024-09-03,Environmental Trust,7500.00
+d007,Green Earth Foundation,2024-09-04,Green Valley Company,3000.00
+d008,Green Earth Foundation,2024-09-04,Community Fund,2000.00
+d009,Green Earth Foundation,2024-09-05,Robert Johnson Family,750.00
+d010,Green Earth Foundation,2024-09-05,EcoTech Solutions,4000.00
+d011,Green Earth Foundation,2024-09-06,Springfield Bank,6000.00
+d012,Green Earth Foundation,2024-09-06,Sarah Williams,150.00
+d013,Green Earth Foundation,2024-09-07,Green Energy Corp,8000.00
+d014,Green Earth Foundation,2024-09-07,Local Garden Club,350.00
+d015,Green Earth Foundation,2024-09-08,Metro Foundation,12000.00
+d016,Green Earth Foundation,2024-09-08,Michael Brown,200.00
+d017,Green Earth Foundation,2024-09-09,Earth Care Industries,5500.00
+d018,Green Earth Foundation,2024-09-09,Community Church,450.00
+d019,Green Earth Foundation,2024-09-10,Sustainable Living Co,3500.00
+d020,Green Earth Foundation,2024-09-10,Jennifer Davis,300.00
+d021,Green Earth Foundation,2024-09-11,Green Future Fund,9000.00
+d022,Green Earth Foundation,2024-09-11,David Wilson,175.00
+d023,Green Earth Foundation,2024-09-12,EcoVenture Capital,7000.00
+d024,Green Earth Foundation,2024-09-12,Local School District,2500.00
+d025,Green Earth Foundation,2024-09-13,Environmental Alliance,11000.00
+d026,Green Earth Foundation,2024-09-13,Lisa Anderson,125.00
+d027,Green Earth Foundation,2024-09-14,Green Solutions Inc,4500.00
+d028,Green Earth Foundation,2024-09-14,Community Center,1800.00
+d029,Green Earth Foundation,2024-09-15,Earth Protection Fund,13000.00
+d030,Green Earth Foundation,2024-09-15,Thomas Miller,225.00
+d031,Community Help Center,2024-09-01,Helping Hands Foundation,8000.00
+d032,Community Help Center,2024-09-01,Local Food Bank,1200.00
+d033,Community Help Center,2024-09-02,City Relief Fund,15000.00
+d034,Community Help Center,2024-09-02,Anonymous Benefactor,2000.00
+d035,Community Help Center,2024-09-03,Community Care Corp,5000.00
+d036,Community Help Center,2024-09-03,Faith Community Church,800.00
+d037,Community Help Center,2024-09-04,Social Services Trust,10000.00
+d038,Community Help Center,2024-09-04,Local Rotary Club,1500.00
+d039,Community Help Center,2024-09-05,Hope Foundation,7000.00
+d040,Community Help Center,2024-09-05,Family Support Network,600.00
+d041,Community Help Center,2024-09-06,Community Aid Fund,12000.00
+d042,Community Help Center,2024-09-06,Local Business Group,2500.00
+d043,Community Help Center,2024-09-07,Humanitarian Trust,9000.00
+d044,Community Help Center,2024-09-07,Community Volunteers,400.00
+d045,Community Help Center,2024-09-08,Social Impact Fund,11000.00
+d046,Community Help Center,2024-09-08,Local Lions Club,750.00
+d047,Community Help Center,2024-09-09,Community Support Corp,6000.00
+d048,Community Help Center,2024-09-09,Neighborhood Association,300.00
+d049,Community Help Center,2024-09-10,Care Foundation,8500.00
+d050,Community Help Center,2024-09-10,Local School Board,1800.00
+d051,Community Help Center,2024-09-11,Community Relief Fund,9500.00
+d052,Community Help Center,2024-09-11,Support Network,550.00
+d053,Community Help Center,2024-09-12,Social Services Fund,7500.00
+d054,Community Help Center,2024-09-12,Community Church,350.00
+d055,Community Help Center,2024-09-13,Help Foundation,13000.00
+d056,Community Help Center,2024-09-13,Local Charity Group,450.00
+d057,Community Help Center,2024-09-14,Community Care Fund,5500.00
+d058,Community Help Center,2024-09-14,Neighborhood Support,200.00
+d059,Community Help Center,2024-09-15,Social Impact Trust,10500.00
+d060,Community Help Center,2024-09-15,Community Volunteers,650.00
+d061,Food Bank Network,2024-09-01,Food Security Foundation,12000.00
+d062,Food Bank Network,2024-09-01,Local Grocery Chain,3000.00
+d063,Food Bank Network,2024-09-02,Hunger Relief Fund,18000.00
+d064,Food Bank Network,2024-09-02,Community Kitchen,800.00
+d065,Food Bank Network,2024-09-03,Food Aid Trust,15000.00
+d066,Food Bank Network,2024-09-03,Local Restaurant Group,2500.00
+d067,Food Bank Network,2024-09-04,Nutrition Foundation,10000.00
+d068,Food Bank Network,2024-09-04,Food Distribution Corp,4000.00
+d069,Food Bank Network,2024-09-05,Hunger Prevention Fund,14000.00
+d070,Food Bank Network,2024-09-05,Local Farmers Market,600.00
+d071,Food Bank Network,2024-09-06,Food Security Alliance,16000.00
+d072,Food Bank Network,2024-09-06,Community Food Bank,1200.00
+d073,Food Bank Network,2024-09-07,Nutrition Support Fund,11000.00
+d074,Food Bank Network,2024-09-07,Local Bakery Chain,1800.00
+d075,Food Bank Network,2024-09-08,Hunger Relief Trust,13000.00
+d076,Food Bank Network,2024-09-08,Food Distribution Network,2200.00
+d077,Food Bank Network,2024-09-09,Food Aid Foundation,9500.00
+d078,Food Bank Network,2024-09-09,Local Supermarket,1500.00
+d079,Food Bank Network,2024-09-10,Nutrition Care Fund,12500.00
+d080,Food Bank Network,2024-09-10,Community Kitchen Network,900.00
+d081,Food Bank Network,2024-09-11,Hunger Prevention Alliance,17000.00
+d082,Food Bank Network,2024-09-11,Food Security Corp,2800.00
+d083,Food Bank Network,2024-09-12,Food Relief Trust,14500.00
+d084,Food Bank Network,2024-09-12,Local Food Cooperative,700.00
+d085,Food Bank Network,2024-09-13,Nutrition Support Alliance,13500.00
+d086,Food Bank Network,2024-09-13,Food Distribution Fund,3200.00
+d087,Food Bank Network,2024-09-14,Hunger Relief Network,11500.00
+d088,Food Bank Network,2024-09-14,Community Food Center,850.00
+d089,Food Bank Network,2024-09-15,Food Aid Network,16500.00
+d090,Food Bank Network,2024-09-15,Nutrition Foundation,2100.00

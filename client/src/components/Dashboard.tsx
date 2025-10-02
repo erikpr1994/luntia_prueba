@@ -32,7 +32,7 @@ export default function Dashboard({ organization }: DashboardProps) {
         await Promise.all([
           apiService.getBasicMetrics(),
           apiService.getOverallStats(),
-          apiService.getDailyVolunteerActivity(30, organization),
+          apiService.getDailyVolunteerActivity(400, organization),
         ]);
 
       setBasicMetrics(basicMetricsData.metrics);
@@ -123,7 +123,7 @@ export default function Dashboard({ organization }: DashboardProps) {
 
       <div className={styles.chartGrid}>
         <Chart
-          title="Actividad de Voluntarios (Últimos 30 días)"
+          title="Actividad de Voluntarios (Septiembre 2024)"
           data={chartData}
           type="line"
           dataKey="volunteers"
