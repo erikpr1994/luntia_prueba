@@ -113,7 +113,10 @@ router.get("/daily-activity", async (req: Request, res: Response) => {
     const metricsService = new MetricsService();
     const days = parseInt(req.query.days as string) || 30;
     const organization = req.query.organization as string;
-    const activity = await metricsService.getDailyVolunteerActivity(days, organization);
+    const activity = await metricsService.getDailyVolunteerActivity(
+      days,
+      organization
+    );
     res.json({ activity });
   } catch (error) {
     console.error("Error getting daily activity:", error);

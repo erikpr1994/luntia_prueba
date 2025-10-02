@@ -1,7 +1,35 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { apiService, BasicMetrics, OverallStats, DailyActivity } from "../lib/api";
+server:dev: Error getting daily activity: error: bind message supplies 1 parameters, but prepared statement "" requires 0
+server:dev:     at /Users/erikpr94/Documents/luntia_prueba/node_modules/.pnpm/pg@8.16.3/node_modules/pg/lib/client.js:545:17
+server:dev:     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+server:dev:     at async query (/Users/erikpr94/Documents/luntia_prueba/server/src/database/connection.ts:21:20)
+server:dev:     at async MetricsService.getDailyVolunteerActivity (/Users/erikpr94/Documents/luntia_prueba/server/src/services/metricsService.ts:341:20)
+server:dev:     at async <anonymous> (/Users/erikpr94/Documents/luntia_prueba/server/src/routes/metricsRoutes.ts:116:22) {
+server:dev:   length: 137,
+server:dev:   severity: 'ERROR',
+server:dev:   code: '08P01',
+server:dev:   detail: undefined,
+server:dev:   hint: undefined,
+server:dev:   position: undefined,
+server:dev:   internalPosition: undefined,
+server:dev:   internalQuery: undefined,
+server:dev:   where: undefined,
+server:dev:   schema: undefined,
+server:dev:   table: undefined,
+server:dev:   column: undefined,
+server:dev:   dataType: undefined,
+server:dev:   constraint: undefined,
+server:dev:   file: 'postgres.c',
+server:dev:   line: '1674',
+server:dev:   routine: 'exec_bind_message'
+server:dev: }import {
+  apiService,
+  BasicMetrics,
+  OverallStats,
+  DailyActivity,
+} from "../lib/api";
 import KPICard from "./KPICard";
 import Chart from "./Chart";
 import { LoadingState, ErrorState, EmptyState } from "./StateComponents";
@@ -23,11 +51,12 @@ export default function Dashboard({ organization }: DashboardProps) {
       setLoading(true);
       setError(null);
 
-      const [basicMetricsData, overallStatsData, dailyActivityData] = await Promise.all([
-        apiService.getBasicMetrics(),
-        apiService.getOverallStats(),
-        apiService.getDailyVolunteerActivity(30, organization),
-      ]);
+      const [basicMetricsData, overallStatsData, dailyActivityData] =
+        await Promise.all([
+          apiService.getBasicMetrics(),
+          apiService.getOverallStats(),
+          apiService.getDailyVolunteerActivity(30, organization),
+        ]);
 
       setBasicMetrics(basicMetricsData.metrics);
       setOverallStats(overallStatsData.stats);
@@ -44,10 +73,10 @@ export default function Dashboard({ organization }: DashboardProps) {
   }, [organization]);
 
   // Prepare chart data - Volunteer activity over time from API
-  const chartData = dailyActivity.map(item => ({
-    date: new Date(item.date).toLocaleDateString('es-ES', { 
-      month: 'short', 
-      day: 'numeric' 
+  const chartData = dailyActivity.map((item) => ({
+    date: new Date(item.date).toLocaleDateString("es-ES", {
+      month: "short",
+      day: "numeric",
     }),
     volunteers: item.volunteers,
     hours: item.hours,
@@ -116,8 +145,8 @@ export default function Dashboard({ organization }: DashboardProps) {
       </div>
 
       <div className={styles.chartGrid}>
-        <Chart 
-          title="Actividad de Voluntarios (Últimos 30 días)" 
+        <Chart
+          title="Actividad de Voluntarios (Últimos 30 días)"
           data={chartData}
           type="line"
           dataKey="volunteers"

@@ -49,11 +49,16 @@ class ApiService {
     return this.request<{ stats: OverallStats }>("/api/metrics/stats");
   }
 
-  async getDailyVolunteerActivity(days: number = 30, organization?: string): Promise<{ activity: DailyActivity[] }> {
-    const queryParam = organization 
+  async getDailyVolunteerActivity(
+    days: number = 30,
+    organization?: string
+  ): Promise<{ activity: DailyActivity[] }> {
+    const queryParam = organization
       ? `?days=${days}&organization=${encodeURIComponent(organization)}`
       : `?days=${days}`;
-    return this.request<{ activity: DailyActivity[] }>(`/api/metrics/daily-activity${queryParam}`);
+    return this.request<{ activity: DailyActivity[] }>(
+      `/api/metrics/daily-activity${queryParam}`
+    );
   }
 
   async uploadCSV(

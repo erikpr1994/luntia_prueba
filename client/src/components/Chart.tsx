@@ -29,15 +29,15 @@ interface ChartProps {
   xAxisKey?: string;
 }
 
-export default function Chart({ 
-  title, 
-  data, 
-  loading, 
-  error, 
+export default function Chart({
+  title,
+  data,
+  loading,
+  error,
   type = "bar",
   dataKey = "value",
   secondaryDataKey,
-  xAxisKey = "name"
+  xAxisKey = "name",
 }: ChartProps) {
   if (loading) {
     return (
@@ -78,14 +78,14 @@ export default function Chart({
   const renderChart = () => {
     const commonProps = {
       data,
-      margin: { top: 20, right: 30, left: 20, bottom: 5 }
+      margin: { top: 20, right: 30, left: 20, bottom: 5 },
     };
 
     if (type === "line") {
       return (
         <LineChart {...commonProps}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis 
+          <XAxis
             dataKey={xAxisKey}
             tick={{ fontSize: 12 }}
             angle={-45}
@@ -93,29 +93,29 @@ export default function Chart({
             height={60}
           />
           <YAxis />
-          <Tooltip 
+          <Tooltip
             formatter={(value, name) => [
-              typeof value === 'number' ? value.toLocaleString() : value,
-              name === dataKey ? 'Voluntarios' : 'Turnos'
+              typeof value === "number" ? value.toLocaleString() : value,
+              name === dataKey ? "Voluntarios" : "Turnos",
             ]}
             labelFormatter={(label) => `Fecha: ${label}`}
           />
           {secondaryDataKey && <Legend />}
-          <Line 
-            type="monotone" 
-            dataKey={dataKey} 
-            stroke="#3b82f6" 
+          <Line
+            type="monotone"
+            dataKey={dataKey}
+            stroke="#3b82f6"
             strokeWidth={2}
-            dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
+            dot={{ fill: "#3b82f6", strokeWidth: 2, r: 4 }}
             name="Voluntarios"
           />
           {secondaryDataKey && (
-            <Line 
-              type="monotone" 
-              dataKey={secondaryDataKey} 
-              stroke="#10b981" 
+            <Line
+              type="monotone"
+              dataKey={secondaryDataKey}
+              stroke="#10b981"
               strokeWidth={2}
-              dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
+              dot={{ fill: "#10b981", strokeWidth: 2, r: 4 }}
               name="Turnos"
             />
           )}

@@ -335,11 +335,11 @@ export class MetricsService {
 
   // Daily volunteer activity for charts
   async getDailyVolunteerActivity(days: number = 30, organization?: string) {
-    const orgFilter = organization ? "AND v.organization = $2" : "";
-    const params = organization ? [days, organization] : [days];
+    let queryText: string;
+    let params: any[];
 
-    const result = await query(
-      `
+    if (organization) {
+      queryText = `
         SELECT 
           s.date,
           COUNT(DISTINCT s.volunteer_id) as volunteers,
@@ -347,14 +347,29 @@ export class MetricsService {
           COUNT(s.id) as shifts
         FROM shifts s
         JOIN volunteers v ON s.volunteer_id = v.id
-        WHERE s.date >= CURRENT_DATE - INTERVAL '${days} days'
-        ${orgFilter}
+        WHERE s.date >= CURRENT_DATE - INTERVAL '1 day' * $1
+        AND v.organization = $2
         GROUP BY s.date
         ORDER BY s.date ASC
-      `,
-      params
-    );
+      `;
+      params = [days, organization];
+    } else {
+      queryText = `
+        SELECT 
+          s.date,
+          COUNT(DISTINCT s.volunteer_id) as volunteers,
+          COALESCE(SUM(s.hours), 0) as hours,
+          COUNT(s.id) as shifts
+        FROM shifts s
+        JOIN volunteers v ON s.volunteer_id = v.id
+        WHERE s.date >= CURRENT_DATE - INTERVAL '1 day' * $1
+        GROUP BY s.date
+        ORDER BY s.date ASC
+      `;
+      params = [days];
+    }
 
+    const result = await query(queryText, params);
     return result.rows;
   }
 }
