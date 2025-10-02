@@ -2,10 +2,11 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 export interface BasicMetrics {
+  retentionRate: number;
+  avgHoursPerVolunteer: number;
+  economicValue: number;
   activeVolunteers: number;
-  totalHours: number;
-  lastMonthShifts: number;
-  totalDonations: number;
+  atRiskVolunteers: number;
 }
 
 export interface OverallStats {

@@ -43,11 +43,11 @@ export default function Dashboard({ organization }: DashboardProps) {
   // Prepare chart data
   const chartData = overallStats
     ? [
-        { name: "Voluntarios", value: overallStats.volunteers },
-        { name: "Miembros", value: overallStats.members },
-        { name: "Turnos", value: overallStats.shifts },
-        { name: "Donaciones", value: overallStats.donations },
-        { name: "Actividades", value: overallStats.activities },
+        { name: "Voluntarios", value: overallStats.volunteers || 0 },
+        { name: "Miembros", value: overallStats.members || 0 },
+        { name: "Turnos", value: overallStats.shifts || 0 },
+        { name: "Donaciones", value: overallStats.donations || 0 },
+        { name: "Actividades", value: overallStats.activities || 0 },
       ]
     : [];
 
@@ -82,31 +82,31 @@ export default function Dashboard({ organization }: DashboardProps) {
       <div className={styles.kpiGrid}>
         <KPICard
           title="Voluntarios Activos"
-          value={basicMetrics.activeVolunteers}
+          value={basicMetrics.activeVolunteers || 0}
           subtitle="Voluntarios activos actualmente"
           icon="👥"
         />
         <KPICard
-          title="Total Horas"
-          value={basicMetrics.totalHours.toLocaleString()}
-          subtitle="Horas trabajadas en total"
+          title="Promedio Horas/Voluntario"
+          value={basicMetrics.avgHoursPerVolunteer || 0}
+          subtitle="Horas promedio por voluntario"
           icon="⏰"
         />
         <KPICard
-          title="Turnos del Mes"
-          value={basicMetrics.lastMonthShifts}
-          subtitle="Turnos realizados el mes pasado"
-          icon="📅"
+          title="Tasa de Retención"
+          value={`${basicMetrics.retentionRate || 0}%`}
+          subtitle="Voluntarios retenidos"
+          icon="📊"
         />
         <KPICard
-          title="Total Donaciones"
-          value={`$${basicMetrics.totalDonations.toLocaleString()}`}
-          subtitle="Monto total recaudado"
+          title="Valor Económico"
+          value={`$${(basicMetrics.economicValue || 0).toLocaleString()}`}
+          subtitle="Valor del trabajo voluntario"
           icon="💰"
         />
         <KPICard
           title="Total Miembros"
-          value={overallStats.members}
+          value={overallStats.members || 0}
           subtitle="Miembros registrados"
           icon="👤"
         />
