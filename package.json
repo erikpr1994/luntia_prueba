@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "packageManager": "pnpm@10.17.1",
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "docker-compose up -d postgres && turbo dev",
+    "dev:full": "docker-compose up",
+    "dev:down": "docker-compose down",
+    "setup-dev-db": "docker-compose up -d postgres",
     "lint": "turbo lint",
     "format": "turbo format",
     "check": "turbo check",
@@ -15,10 +19,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "workspaces": [
-    "server",
-    "client"
-  ],
   "devDependencies": {
     "husky": "^9.1.7",
     "lint-staged": "^16.2.3",
