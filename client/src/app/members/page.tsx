@@ -5,13 +5,13 @@ export default function MembersPage() {
   const stats = (
     <>
       <KPICard
-        title="Total Miembros"
+        title="Total Socios"
         value={128}
-        subtitle="Miembros registrados"
+        subtitle="Socios registrados"
         icon="👤"
       />
       <KPICard
-        title="Miembros Activos"
+        title="Socios Activos"
         value={95}
         subtitle="Actualmente activos"
         icon="✅"
@@ -75,15 +75,15 @@ export default function MembersPage() {
   const emptyState = (
     <div className="emptyState">
       <div className="emptyStateIcon">👤</div>
-      <p className="emptyStateText">No hay miembros registrados</p>
+      <p className="emptyStateText">No hay Socios registrados</p>
     </div>
   );
 
   return (
     <DataPage
-      title="Miembros"
+      title="Socios"
       icon="👤"
-      description="Gestión de miembros y suscripciones"
+      description="Gestión de Socios y suscripciones"
       dataType="members"
       stats={stats}
       dataTable={dataTable}

@@ -32,7 +32,7 @@ export default function Dashboard({ organization }: DashboardProps) {
         await Promise.all([
           apiService.getBasicMetrics(),
           apiService.getOverallStats(),
-          apiService.getDailyVolunteerActivity(400, organization),
+          apiService.getDailyVolunteerActivity(7, organization),
         ]);
 
       setBasicMetrics(basicMetricsData.metrics);
@@ -114,16 +114,16 @@ export default function Dashboard({ organization }: DashboardProps) {
           icon="💰"
         />
         <KPICard
-          title="Total Miembros"
+          title="Total Socios"
           value={overallStats.members || 0}
-          subtitle="Miembros registrados"
+          subtitle="Socios registrados"
           icon="👤"
         />
       </div>
 
       <div className={styles.chartGrid}>
         <Chart
-          title="Actividad de Voluntarios (Septiembre 2024)"
+          title="Actividad de Voluntarios (Últimos 7 días)"
           data={chartData}
           type="line"
           dataKey="volunteers"

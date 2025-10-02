@@ -15,8 +15,8 @@ This directory contains comprehensive sample CSV files for testing the Luntia ap
 - **Monthly Contributions**: Range from $25 to $100
 - **Join Dates**: Distributed throughout 2023-2024
 
-### 3. **shifts.csv** (150 shifts)
-- **Date Range**: September 1-20, 2024 (historical data for charts)
+### 3. **shifts.csv** (135 shifts)
+- **Date Range**: September 25 - October 2, 2025 (last week - recent data!)
 - **Activities**: 
   - Green Earth Foundation: Tree Planting, Garden Maintenance, Community Cleanup, Environmental Education
   - Community Help Center: Food Distribution, Shelter Assistance, Community Outreach
@@ -24,14 +24,14 @@ This directory contains comprehensive sample CSV files for testing the Luntia ap
 - **Hours**: 3.0 to 6.5 hours per shift
 - **Volunteers**: All active volunteers from volunteers.csv
 
-### 4. **donations.csv** (90 donations)
-- **Date Range**: September 1-15, 2024
-- **Amount Range**: $125 to $18,000
+### 4. **donations.csv** (72 donations)
+- **Date Range**: September 25 - October 2, 2025 (last week)
+- **Amount Range**: $150 to $18,000
 - **Donors**: Mix of corporations, foundations, individuals, and community groups
 - **Organizations**: All three organizations receiving donations
 
-### 5. **activities.csv** (60 activities)
-- **Date Range**: September 1-20, 2024
+### 5. **activities.csv** (48 activities)
+- **Date Range**: September 25 - October 2, 2025 (last week)
 - **Participant Range**: 12 to 80 participants per activity
 - **Activity Types**: Workshops, events, programs, and community initiatives
 
@@ -77,11 +77,11 @@ After uploading all files, you should see:
 - **Members**: 60 (from members.csv)
 
 ### Chart Data:
-- **Line Chart**: Shows daily volunteer activity from September 1-20, 2024
+- **Line Chart**: Shows daily volunteer activity from the last 7 days (September 25 - October 2, 2025)
 - **Blue Line**: Number of unique volunteers per day
 - **Green Line**: Number of shifts completed per day
-- **Data Points**: Shows activity for most days in September 2024
-- **Note**: Since today is October 2, 2025, this is historical data from over a year ago
+- **Data Points**: Shows recent activity for the past week
+- **Recent Data**: All data is from the last week, making it current and relevant
 
 ## 🔧 Troubleshooting
 
