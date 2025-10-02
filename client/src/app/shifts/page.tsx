@@ -33,10 +33,26 @@ export default function ShiftsPage() {
   }, []);
 
   const totalShifts = shifts.length;
-  const totalHours = shifts.reduce((sum, shift) => sum + parseFloat(shift.hours?.toString() || '0'), 0);
-  const avgHoursPerShift =
-    totalShifts > 0 ? totalHours / totalShifts : 0;
+  const totalHours = shifts.reduce(
+    (sum, shift) => sum + parseFloat(shift.hours?.toString() || "0"),
+    0
+  );
+  const avgHoursPerShift = totalShifts > 0 ? totalHours / totalShifts : 0;
   const uniqueVolunteers = new Set(shifts.map((s) => s.volunteer_id)).size;
+
+  // Format hours and minutes for display
+  const formatHoursMinutes = (hours: number): string => {
+    const wholeHours = Math.floor(hours);
+    const minutes = Math.round((hours - wholeHours) * 60);
+    
+    if (wholeHours === 0) {
+      return `${minutes}min`;
+    } else if (minutes === 0) {
+      return `${wholeHours}h`;
+    } else {
+      return `${wholeHours}h ${minutes}min`;
+    }
+  };
 
   const stats = (
     <>
@@ -60,7 +76,7 @@ export default function ShiftsPage() {
       />
       <KPICard
         title="Promedio por Turno"
-        value={avgHoursPerShift.toString()}
+        value={formatHoursMinutes(avgHoursPerShift)}
         subtitle="Horas promedio por turno"
         icon="📊"
       />
@@ -87,7 +103,12 @@ export default function ShiftsPage() {
             <td>{shift.organization}</td>
             <td>{new Date(shift.date).toLocaleDateString("es-ES")}</td>
             <td>{shift.activity}</td>
-            <td>{parseFloat(shift.hours?.toString() || '0').toLocaleString("es-ES")}h</td>
+            <td>
+              {parseFloat(shift.hours?.toString() || "0").toLocaleString(
+                "es-ES"
+              )}
+              h
+            </td>
           </tr>
         ))}
       </tbody>
