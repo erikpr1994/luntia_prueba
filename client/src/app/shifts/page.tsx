@@ -1,31 +1,64 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
+import LoadingState from "../../components/LoadingState";
+import ErrorState from "../../components/ErrorState";
+import EmptyState from "../../components/EmptyState";
+import { apiService, Shift } from "../../lib/api";
 
 export default function ShiftsPage() {
+  const [shifts, setShifts] = useState<Shift[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchShifts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await apiService.getShifts();
+      setShifts(response.data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error desconocido");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchShifts();
+  }, []);
+
+  const totalShifts = shifts.length;
+  const totalHours = shifts.reduce((sum, shift) => sum + shift.hours, 0);
+  const avgHoursPerShift = totalShifts > 0 ? Math.round((totalHours / totalShifts) * 10) / 10 : 0;
+  const uniqueVolunteers = new Set(shifts.map(s => s.volunteer_id)).size;
+
   const stats = (
     <>
       <KPICard
         title="Total Turnos"
-        value={156}
-        subtitle="Turnos programados"
+        value={totalShifts}
+        subtitle="Turnos registrados"
         icon="📅"
       />
       <KPICard
-        title="Turnos Completados"
-        value={142}
-        subtitle="Turnos realizados"
-        icon="✅"
+        title="Voluntarios Únicos"
+        value={uniqueVolunteers}
+        subtitle="Voluntarios que han trabajado"
+        icon="👥"
       />
       <KPICard
         title="Horas Totales"
-        value="1,136"
+        value={totalHours.toLocaleString()}
         subtitle="Horas trabajadas"
         icon="⏰"
       />
       <KPICard
-        title="Eficiencia"
-        value="91%"
-        subtitle="Tasa de completado"
+        title="Promedio por Turno"
+        value={avgHoursPerShift.toString()}
+        subtitle="Horas promedio por turno"
         icon="📊"
       />
     </>
@@ -36,48 +69,41 @@ export default function ShiftsPage() {
       <thead>
         <tr>
           <th>Voluntario</th>
+          <th>Organización</th>
           <th>Fecha</th>
-          <th>Hora Inicio</th>
-          <th>Hora Fin</th>
           <th>Actividad</th>
-          <th>Estado</th>
+          <th>Horas</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Juan Pérez</td>
-          <td>2024-03-15</td>
-          <td>09:00</td>
-          <td>17:00</td>
-          <td>Voluntariado general</td>
-          <td>Completado</td>
-        </tr>
-        <tr>
-          <td>María García</td>
-          <td>2024-03-14</td>
-          <td>14:00</td>
-          <td>18:00</td>
-          <td>Apoyo educativo</td>
-          <td>Completado</td>
-        </tr>
-        <tr>
-          <td>Carlos López</td>
-          <td>2024-03-16</td>
-          <td>10:00</td>
-          <td>16:00</td>
-          <td>Mantenimiento</td>
-          <td>Programado</td>
-        </tr>
+        {shifts.map((shift) => (
+          <tr key={shift.id}>
+            <td>{shift.volunteer_name || `Voluntario ${shift.volunteer_id}`}</td>
+            <td>{shift.organization}</td>
+            <td>{new Date(shift.date).toLocaleDateString('es-ES')}</td>
+            <td>{shift.activity}</td>
+            <td>{shift.hours}h</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
 
   const emptyState = (
-    <div className="emptyState">
-      <div className="emptyStateIcon">📅</div>
-      <p className="emptyStateText">No hay turnos programados</p>
-    </div>
+    <EmptyState
+      icon="📅"
+      title="No hay turnos registrados"
+      description="Sube un archivo CSV con datos de turnos para comenzar"
+    />
   );
+
+  if (loading) {
+    return <LoadingState />;
+  }
+
+  if (error) {
+    return <ErrorState message={error} onRetry={fetchShifts} />;
+  }
 
   return (
     <DataPage
@@ -86,8 +112,9 @@ export default function ShiftsPage() {
       description="Gestión de turnos y horarios de voluntarios"
       dataType="shifts"
       stats={stats}
-      dataTable={dataTable}
+      dataTable={shifts.length > 0 ? dataTable : emptyState}
       emptyState={emptyState}
+      onUploadComplete={fetchShifts}
     />
   );
 }

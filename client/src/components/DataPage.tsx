@@ -12,6 +12,7 @@ interface DataPageProps {
   stats?: React.ReactNode;
   dataTable?: React.ReactNode;
   emptyState?: React.ReactNode;
+  onUploadComplete?: () => void;
 }
 
 export default function DataPage({
@@ -22,12 +23,15 @@ export default function DataPage({
   stats,
   dataTable,
   emptyState,
+  onUploadComplete,
 }: DataPageProps) {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   const handleUploadComplete = () => {
-    // This will be handled by each page component to refresh data
-    console.log("Upload completed for", dataType);
+    setIsUploadModalOpen(false);
+    if (onUploadComplete) {
+      onUploadComplete();
+    }
   };
 
   return (

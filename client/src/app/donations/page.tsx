@@ -1,30 +1,72 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
+import LoadingState from "../../components/LoadingState";
+import ErrorState from "../../components/ErrorState";
+import EmptyState from "../../components/EmptyState";
+import { apiService, Donation } from "../../lib/api";
 
 export default function DonationsPage() {
+  const [donations, setDonations] = useState<Donation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchDonations = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await apiService.getDonations();
+      setDonations(response.data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error desconocido");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDonations();
+  }, []);
+
+  const totalDonations = donations.length;
+  const totalAmount = donations.reduce((sum, donation) => sum + donation.amount, 0);
+  const uniqueDonors = new Set(donations.map(d => d.donor)).size;
+  const avgDonation = totalDonations > 0 ? Math.round(totalAmount / totalDonations) : 0;
+
+  // Get recent donations (last 7 days)
+  const recentDonations = donations.filter(d => {
+    const donationDate = new Date(d.date);
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    return donationDate >= sevenDaysAgo;
+  });
+  const recentAmount = recentDonations.reduce((sum, donation) => sum + donation.amount, 0);
+
   const stats = (
     <>
       <KPICard
         title="Total Donaciones"
-        value="$45,680"
+        value={`$${totalAmount.toLocaleString()}`}
         subtitle="Monto recaudado"
         icon="💰"
       />
       <KPICard
-        title="Donaciones Este Mes"
-        value="$8,420"
-        subtitle="Recaudado en marzo"
+        title="Esta Semana"
+        value={`$${recentAmount.toLocaleString()}`}
+        subtitle="Recaudado en últimos 7 días"
         icon="📈"
       />
       <KPICard
         title="Total Donantes"
-        value={89}
+        value={uniqueDonors}
         subtitle="Donantes únicos"
         icon="👥"
       />
       <KPICard
         title="Donación Promedio"
-        value="$513"
+        value={`$${avgDonation.toLocaleString()}`}
         subtitle="Por donación"
         icon="📊"
       />
@@ -36,48 +78,45 @@ export default function DonationsPage() {
       <thead>
         <tr>
           <th>Donante</th>
+          <th>Organización</th>
           <th>Monto</th>
           <th>Fecha</th>
           <th>Tipo</th>
-          <th>Método</th>
-          <th>Estado</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Empresa ABC</td>
-          <td>$5,000.00</td>
-          <td>2024-03-10</td>
-          <td>Corporativa</td>
-          <td>Transferencia</td>
-          <td>Completada</td>
-        </tr>
-        <tr>
-          <td>Ana Martínez</td>
-          <td>$250.00</td>
-          <td>2024-03-12</td>
-          <td>Individual</td>
-          <td>Tarjeta</td>
-          <td>Completada</td>
-        </tr>
-        <tr>
-          <td>Fundación XYZ</td>
-          <td>$2,500.00</td>
-          <td>2024-03-08</td>
-          <td>Fundación</td>
-          <td>Cheque</td>
-          <td>Pendiente</td>
-        </tr>
+        {donations.map((donation) => (
+          <tr key={donation.id}>
+            <td>{donation.donor}</td>
+            <td>{donation.organization}</td>
+            <td>${donation.amount.toLocaleString()}</td>
+            <td>{new Date(donation.date).toLocaleDateString('es-ES')}</td>
+            <td>
+              <span className={`donation-type ${donation.amount >= 1000 ? 'major' : 'standard'}`}>
+                {donation.amount >= 1000 ? 'Mayor' : 'Estándar'}
+              </span>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
 
   const emptyState = (
-    <div className="emptyState">
-      <div className="emptyStateIcon">💰</div>
-      <p className="emptyStateText">No hay donaciones registradas</p>
-    </div>
+    <EmptyState
+      icon="💰"
+      title="No hay donaciones registradas"
+      description="Sube un archivo CSV con datos de donaciones para comenzar"
+    />
   );
+
+  if (loading) {
+    return <LoadingState />;
+  }
+
+  if (error) {
+    return <ErrorState message={error} onRetry={fetchDonations} />;
+  }
 
   return (
     <DataPage
@@ -86,8 +125,9 @@ export default function DonationsPage() {
       description="Gestión de donaciones y donantes"
       dataType="donations"
       stats={stats}
-      dataTable={dataTable}
+      dataTable={donations.length > 0 ? dataTable : emptyState}
       emptyState={emptyState}
+      onUploadComplete={fetchDonations}
     />
   );
 }

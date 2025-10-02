@@ -24,6 +24,55 @@ export interface DailyActivity {
   shifts: number;
 }
 
+// Data type interfaces
+export interface Volunteer {
+  id: string;
+  organization: string;
+  name: string;
+  join_date: string;
+  active: boolean;
+  role: string;
+  created_at: string;
+}
+
+export interface Member {
+  id: string;
+  organization: string;
+  name: string;
+  join_date: string;
+  monthly_contribution: number;
+  created_at: string;
+}
+
+export interface Shift {
+  id: string;
+  volunteer_id: string;
+  organization: string;
+  date: string;
+  activity: string;
+  hours: number;
+  created_at: string;
+  volunteer_name?: string;
+}
+
+export interface Donation {
+  id: string;
+  organization: string;
+  date: string;
+  donor: string;
+  amount: number;
+  created_at: string;
+}
+
+export interface Activity {
+  id: string;
+  organization: string;
+  name: string;
+  date: string;
+  participants: number;
+  created_at: string;
+}
+
 class ApiService {
   private async request<T>(endpoint: string): Promise<T> {
     try {
@@ -107,6 +156,91 @@ class ApiService {
 
   async uploadActivitiesCSV(file: File) {
     return this.uploadCSV("/api/activities/upload", file);
+  }
+
+  // Data fetching methods
+  async getVolunteers(filters?: { active?: boolean; organization?: string }) {
+    const queryParams = new URLSearchParams();
+    if (filters?.active !== undefined) {
+      queryParams.append("active", filters.active.toString());
+    }
+    if (filters?.organization) {
+      queryParams.append("organization", filters.organization);
+    }
+    
+    const queryString = queryParams.toString();
+    const url = `/api/volunteers${queryString ? `?${queryString}` : ""}`;
+    return this.request<{ data: Volunteer[] }>(url);
+  }
+
+  async getMembers(filters?: { organization?: string }) {
+    const queryParams = new URLSearchParams();
+    if (filters?.organization) {
+      queryParams.append("organization", filters.organization);
+    }
+    
+    const queryString = queryParams.toString();
+    const url = `/api/members${queryString ? `?${queryString}` : ""}`;
+    return this.request<{ data: Member[] }>(url);
+  }
+
+  async getShifts(filters?: { 
+    volunteer_id?: string; 
+    organization?: string; 
+    date_from?: string; 
+    date_to?: string; 
+  }) {
+    const queryParams = new URLSearchParams();
+    if (filters?.volunteer_id) {
+      queryParams.append("volunteer_id", filters.volunteer_id);
+    }
+    if (filters?.organization) {
+      queryParams.append("organization", filters.organization);
+    }
+    if (filters?.date_from) {
+      queryParams.append("date_from", filters.date_from);
+    }
+    if (filters?.date_to) {
+      queryParams.append("date_to", filters.date_to);
+    }
+    
+    const queryString = queryParams.toString();
+    const url = `/api/shifts${queryString ? `?${queryString}` : ""}`;
+    return this.request<{ data: Shift[] }>(url);
+  }
+
+  async getDonations(filters?: { organization?: string; date_from?: string; date_to?: string }) {
+    const queryParams = new URLSearchParams();
+    if (filters?.organization) {
+      queryParams.append("organization", filters.organization);
+    }
+    if (filters?.date_from) {
+      queryParams.append("date_from", filters.date_from);
+    }
+    if (filters?.date_to) {
+      queryParams.append("date_to", filters.date_to);
+    }
+    
+    const queryString = queryParams.toString();
+    const url = `/api/donations${queryString ? `?${queryString}` : ""}`;
+    return this.request<{ data: Donation[] }>(url);
+  }
+
+  async getActivities(filters?: { organization?: string; date_from?: string; date_to?: string }) {
+    const queryParams = new URLSearchParams();
+    if (filters?.organization) {
+      queryParams.append("organization", filters.organization);
+    }
+    if (filters?.date_from) {
+      queryParams.append("date_from", filters.date_from);
+    }
+    if (filters?.date_to) {
+      queryParams.append("date_to", filters.date_to);
+    }
+    
+    const queryString = queryParams.toString();
+    const url = `/api/activities${queryString ? `?${queryString}` : ""}`;
+    return this.request<{ data: Activity[] }>(url);
   }
 }
 

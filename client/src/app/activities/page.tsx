@@ -1,32 +1,73 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
+import LoadingState from "../../components/LoadingState";
+import ErrorState from "../../components/ErrorState";
+import EmptyState from "../../components/EmptyState";
+import { apiService, Activity } from "../../lib/api";
 
 export default function ActivitiesPage() {
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchActivities = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await apiService.getActivities();
+      setActivities(response.data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error desconocido");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchActivities();
+  }, []);
+
+  const totalActivities = activities.length;
+  const totalParticipants = activities.reduce((sum, activity) => sum + activity.participants, 0);
+  const avgParticipants = totalActivities > 0 ? Math.round(totalParticipants / totalActivities) : 0;
+  const uniqueOrganizations = new Set(activities.map(a => a.organization)).size;
+
+  // Get recent activities (last 7 days)
+  const recentActivities = activities.filter(a => {
+    const activityDate = new Date(a.date);
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    return activityDate >= sevenDaysAgo;
+  });
+
   const stats = (
     <>
       <KPICard
         title="Total Actividades"
-        value={24}
+        value={totalActivities}
         subtitle="Actividades organizadas"
         icon="🎯"
       />
       <KPICard
-        title="Actividades Activas"
-        value={8}
-        subtitle="En curso"
-        icon="🟢"
+        title="Esta Semana"
+        value={recentActivities.length}
+        subtitle="Actividades recientes"
+        icon="📅"
       />
       <KPICard
         title="Total Participantes"
-        value={456}
-        subtitle="Participantes únicos"
+        value={totalParticipants.toLocaleString()}
+        subtitle="Participantes totales"
         icon="👥"
       />
       <KPICard
-        title="Satisfacción"
-        value="4.8/5"
-        subtitle="Rating promedio"
-        icon="⭐"
+        title="Promedio Participantes"
+        value={avgParticipants.toString()}
+        subtitle="Por actividad"
+        icon="📊"
       />
     </>
   );
@@ -36,52 +77,45 @@ export default function ActivitiesPage() {
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Fecha Inicio</th>
-          <th>Fecha Fin</th>
-          <th>Ubicación</th>
+          <th>Organización</th>
+          <th>Fecha</th>
           <th>Participantes</th>
-          <th>Estado</th>
+          <th>Tipo</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Campaña de Limpieza</td>
-          <td>Limpieza de playa local</td>
-          <td>2024-03-20</td>
-          <td>2024-03-20</td>
-          <td>Playa Central</td>
-          <td>25</td>
-          <td>Completada</td>
-        </tr>
-        <tr>
-          <td>Taller de Reciclaje</td>
-          <td>Educación sobre reciclaje</td>
-          <td>2024-03-25</td>
-          <td>2024-03-25</td>
-          <td>Centro Comunitario</td>
-          <td>30</td>
-          <td>Programada</td>
-        </tr>
-        <tr>
-          <td>Mercado Solidario</td>
-          <td>Venta de productos locales</td>
-          <td>2024-03-18</td>
-          <td>2024-03-18</td>
-          <td>Plaza Principal</td>
-          <td>150</td>
-          <td>Completada</td>
-        </tr>
+        {activities.map((activity) => (
+          <tr key={activity.id}>
+            <td>{activity.name}</td>
+            <td>{activity.organization}</td>
+            <td>{new Date(activity.date).toLocaleDateString('es-ES')}</td>
+            <td>{activity.participants}</td>
+            <td>
+              <span className={`activity-type ${activity.participants >= 50 ? 'large' : 'standard'}`}>
+                {activity.participants >= 50 ? 'Gran Evento' : 'Estándar'}
+              </span>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
 
   const emptyState = (
-    <div className="emptyState">
-      <div className="emptyStateIcon">🎯</div>
-      <p className="emptyStateText">No hay actividades registradas</p>
-    </div>
+    <EmptyState
+      icon="🎯"
+      title="No hay actividades registradas"
+      description="Sube un archivo CSV con datos de actividades para comenzar"
+    />
   );
+
+  if (loading) {
+    return <LoadingState />;
+  }
+
+  if (error) {
+    return <ErrorState message={error} onRetry={fetchActivities} />;
+  }
 
   return (
     <DataPage
@@ -90,8 +124,9 @@ export default function ActivitiesPage() {
       description="Gestión de actividades y eventos"
       dataType="activities"
       stats={stats}
-      dataTable={dataTable}
+      dataTable={activities.length > 0 ? dataTable : emptyState}
       emptyState={emptyState}
+      onUploadComplete={fetchActivities}
     />
   );
 }
