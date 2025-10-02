@@ -18,7 +18,7 @@ router.post(
       const shiftService = new ShiftService();
       const result = await shiftService.processCSV(csvData);
 
-      res.json({ success: true, ...result });
+      res.json({ ...result });
     } catch (error) {
       console.error("Error processing shifts CSV:", error);
       res.status(500).json({ error: "Failed to process CSV" });
@@ -37,7 +37,7 @@ router.get("/", async (req: Request, res: Response) => {
       date_to: req.query.date_to as string,
     };
     const shifts = await shiftService.getAll(filters);
-    res.json({ success: true, data: shifts });
+    res.json({ data: shifts });
   } catch (error) {
     console.error("Error getting shifts:", error);
     res.status(500).json({ error: "Failed to get shifts" });
@@ -53,7 +53,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Shift not found" });
     }
 
-    res.json({ success: true, data: shift });
+    res.json({ data: shift });
   } catch (error) {
     console.error("Error getting shift:", error);
     res.status(500).json({ error: "Failed to get shift" });
@@ -64,7 +64,7 @@ router.get("/volunteer/:volunteerId", async (req: Request, res: Response) => {
   try {
     const shiftService = new ShiftService();
     const shifts = await shiftService.getByVolunteer(req.params.volunteerId);
-    res.json({ success: true, data: shifts });
+    res.json({ data: shifts });
   } catch (error) {
     console.error("Error getting shifts by volunteer:", error);
     res.status(500).json({ error: "Failed to get shifts" });

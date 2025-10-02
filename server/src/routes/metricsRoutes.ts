@@ -8,7 +8,7 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const metricsService = new MetricsService();
     const metrics = await metricsService.getBasicMetrics();
-    res.json({ success: true, metrics });
+    res.json({ metrics });
   } catch (error) {
     console.error("Error getting metrics:", error);
     res.status(500).json({ error: "Failed to get metrics" });
@@ -24,7 +24,7 @@ router.get(
       const metrics = await metricsService.getOrganizationMetrics(
         req.params.organization
       );
-      res.json({ success: true, metrics });
+      res.json({ metrics });
     } catch (error) {
       console.error("Error getting organization metrics:", error);
       res.status(500).json({ error: "Failed to get metrics" });
@@ -37,7 +37,7 @@ router.get("/stats", async (req: Request, res: Response) => {
   try {
     const metricsService = new MetricsService();
     const stats = await metricsService.getOverallStats();
-    res.json({ success: true, stats });
+    res.json({ stats });
   } catch (error) {
     console.error("Error getting stats:", error);
     res.status(500).json({ error: "Failed to get stats" });

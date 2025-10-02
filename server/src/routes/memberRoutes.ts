@@ -18,7 +18,7 @@ router.post(
       const memberService = new MemberService();
       const result = await memberService.processCSV(csvData);
 
-      res.json({ success: true, ...result });
+      res.json({ ...result });
     } catch (error) {
       console.error("Error processing members CSV:", error);
       res.status(500).json({ error: "Failed to process CSV" });
@@ -37,7 +37,7 @@ router.get("/", async (req: Request, res: Response) => {
         : undefined,
     };
     const members = await memberService.getAll(filters);
-    res.json({ success: true, data: members });
+    res.json({ data: members });
   } catch (error) {
     console.error("Error getting members:", error);
     res.status(500).json({ error: "Failed to get members" });
@@ -53,7 +53,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Member not found" });
     }
 
-    res.json({ success: true, data: member });
+    res.json({ data: member });
   } catch (error) {
     console.error("Error getting member:", error);
     res.status(500).json({ error: "Failed to get member" });
@@ -68,7 +68,7 @@ router.get(
       const members = await memberService.getByOrganization(
         req.params.organization
       );
-      res.json({ success: true, data: members });
+      res.json({ data: members });
     } catch (error) {
       console.error("Error getting members by organization:", error);
       res.status(500).json({ error: "Failed to get members" });
@@ -80,7 +80,7 @@ router.get("/contributions/with", async (req: Request, res: Response) => {
   try {
     const memberService = new MemberService();
     const members = await memberService.getWithContributions();
-    res.json({ success: true, data: members });
+    res.json({ data: members });
   } catch (error) {
     console.error("Error getting members with contributions:", error);
     res.status(500).json({ error: "Failed to get members" });

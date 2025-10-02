@@ -18,7 +18,7 @@ router.post(
       const volunteerService = new VolunteerService();
       const result = await volunteerService.processCSV(csvData);
 
-      res.json({ success: true, ...result });
+      res.json({ ...result });
     } catch (error) {
       console.error("Error processing volunteers CSV:", error);
       res.status(500).json({ error: "Failed to process CSV" });
@@ -35,7 +35,7 @@ router.get("/", async (req: Request, res: Response) => {
       organization: req.query.organization as string,
     };
     const volunteers = await volunteerService.getAll(filters);
-    res.json({ success: true, data: volunteers });
+    res.json({ data: volunteers });
   } catch (error) {
     console.error("Error getting volunteers:", error);
     res.status(500).json({ error: "Failed to get volunteers" });
@@ -51,7 +51,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Volunteer not found" });
     }
 
-    res.json({ success: true, data: volunteer });
+    res.json({ data: volunteer });
   } catch (error) {
     console.error("Error getting volunteer:", error);
     res.status(500).json({ error: "Failed to get volunteer" });
@@ -66,7 +66,7 @@ router.get(
       const volunteers = await volunteerService.getByOrganization(
         req.params.organization
       );
-      res.json({ success: true, data: volunteers });
+      res.json({ data: volunteers });
     } catch (error) {
       console.error("Error getting volunteers by organization:", error);
       res.status(500).json({ error: "Failed to get volunteers" });

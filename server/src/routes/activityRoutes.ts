@@ -18,7 +18,7 @@ router.post(
       const activityService = new ActivityService();
       const result = await activityService.processCSV(csvData);
 
-      res.json({ success: true, ...result });
+      res.json({ ...result });
     } catch (error) {
       console.error("Error processing activities CSV:", error);
       res.status(500).json({ error: "Failed to process CSV" });
@@ -36,7 +36,7 @@ router.get("/", async (req: Request, res: Response) => {
       date_to: req.query.date_to as string,
     };
     const activities = await activityService.getAll(filters);
-    res.json({ success: true, data: activities });
+    res.json({ data: activities });
   } catch (error) {
     console.error("Error getting activities:", error);
     res.status(500).json({ error: "Failed to get activities" });
@@ -52,7 +52,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Activity not found" });
     }
 
-    res.json({ success: true, data: activity });
+    res.json({ data: activity });
   } catch (error) {
     console.error("Error getting activity:", error);
     res.status(500).json({ error: "Failed to get activity" });
@@ -67,7 +67,7 @@ router.get(
       const activities = await activityService.getByOrganization(
         req.params.organization
       );
-      res.json({ success: true, data: activities });
+      res.json({ data: activities });
     } catch (error) {
       console.error("Error getting activities by organization:", error);
       res.status(500).json({ error: "Failed to get activities" });
@@ -79,7 +79,7 @@ router.get("/upcoming", async (req: Request, res: Response) => {
   try {
     const activityService = new ActivityService();
     const activities = await activityService.getUpcoming();
-    res.json({ success: true, data: activities });
+    res.json({ data: activities });
   } catch (error) {
     console.error("Error getting upcoming activities:", error);
     res.status(500).json({ error: "Failed to get activities" });

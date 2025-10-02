@@ -18,7 +18,7 @@ router.post(
       const donationService = new DonationService();
       const result = await donationService.processCSV(csvData);
 
-      res.json({ success: true, ...result });
+      res.json({ ...result });
     } catch (error) {
       console.error("Error processing donations CSV:", error);
       res.status(500).json({ error: "Failed to process CSV" });
@@ -36,7 +36,7 @@ router.get("/", async (req: Request, res: Response) => {
       date_to: req.query.date_to as string,
     };
     const donations = await donationService.getAll(filters);
-    res.json({ success: true, data: donations });
+    res.json({ data: donations });
   } catch (error) {
     console.error("Error getting donations:", error);
     res.status(500).json({ error: "Failed to get donations" });
@@ -52,7 +52,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Donation not found" });
     }
 
-    res.json({ success: true, data: donation });
+    res.json({ data: donation });
   } catch (error) {
     console.error("Error getting donation:", error);
     res.status(500).json({ error: "Failed to get donation" });
@@ -67,7 +67,7 @@ router.get(
       const donations = await donationService.getByOrganization(
         req.params.organization
       );
-      res.json({ success: true, data: donations });
+      res.json({ data: donations });
     } catch (error) {
       console.error("Error getting donations by organization:", error);
       res.status(500).json({ error: "Failed to get donations" });
