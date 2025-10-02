@@ -84,19 +84,31 @@ export default function Chart({
     if (type === "line") {
       return (
         <LineChart {...commonProps}>
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="#e5e7eb"
+            strokeOpacity={0.3}
+          />
           <XAxis
             dataKey={xAxisKey}
-            tick={{ fontSize: 12 }}
+            tick={{ fontSize: 12, fill: "#6b7280" }}
             angle={-45}
             textAnchor="end"
             height={60}
+            stroke="#6b7280"
           />
-          <YAxis />
+          <YAxis tick={{ fontSize: 12, fill: "#6b7280" }} stroke="#6b7280" />
           <Tooltip
+            contentStyle={{
+              backgroundColor: "white",
+              border: "1px solid #e5e7eb",
+              borderRadius: "8px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              color: "#111827",
+            }}
             formatter={(value, name) => [
-              typeof value === "number" ? value.toLocaleString() : value,
-              name === dataKey ? "Voluntarios" : "Turnos",
+              typeof value === "number" ? value.toLocaleString("es-ES") : value,
+              name === dataKey ? "Turnos" : name,
             ]}
             labelFormatter={(label) => `Fecha: ${label}`}
           />
@@ -105,18 +117,20 @@ export default function Chart({
             type="monotone"
             dataKey={dataKey}
             stroke="#3b82f6"
-            strokeWidth={2}
-            dot={{ fill: "#3b82f6", strokeWidth: 2, r: 4 }}
-            name="Voluntarios"
+            strokeWidth={3}
+            dot={{ fill: "#3b82f6", strokeWidth: 2, r: 5 }}
+            name="Turnos"
+            activeDot={{ r: 6, stroke: "#3b82f6", strokeWidth: 2 }}
           />
           {secondaryDataKey && (
             <Line
               type="monotone"
               dataKey={secondaryDataKey}
               stroke="#10b981"
-              strokeWidth={2}
-              dot={{ fill: "#10b981", strokeWidth: 2, r: 4 }}
+              strokeWidth={3}
+              dot={{ fill: "#10b981", strokeWidth: 2, r: 5 }}
               name="Turnos"
+              activeDot={{ r: 6, stroke: "#10b981", strokeWidth: 2 }}
             />
           )}
         </LineChart>

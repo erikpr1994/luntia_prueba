@@ -126,11 +126,10 @@ export default function Dashboard({ organization }: DashboardProps) {
 
       <div className={styles.chartGrid}>
         <Chart
-          title="Actividad de Voluntarios (Últimos 7 días)"
+          title="Actividad de Turnos (Últimos 7 días)"
           data={chartData}
           type="line"
-          dataKey="volunteers"
-          secondaryDataKey="shifts"
+          dataKey="shifts"
           xAxisKey="date"
         />
       </div>

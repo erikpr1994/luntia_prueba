@@ -51,4 +51,22 @@
   .emptyState {
     color: #9ca3af;
   }
+
+  /* Dark mode chart styling */
+  .chartContainer :global(.recharts-cartesian-grid-horizontal line),
+  .chartContainer :global(.recharts-cartesian-grid-vertical line) {
+    stroke: #374151 !important;
+    stroke-opacity: 0.3 !important;
+  }
+
+  .chartContainer :global(.recharts-xAxis),
+  .chartContainer :global(.recharts-yAxis) {
+    color: #9ca3af !important;
+  }
+
+  .chartContainer :global(.recharts-tooltip-wrapper) {
+    background: #374151 !important;
+    border: 1px solid #4b5563 !important;
+    color: #f9fafb !important;
+  }
 }
