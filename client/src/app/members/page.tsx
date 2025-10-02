@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
 import {
@@ -9,6 +9,7 @@ import {
   LoadingState,
 } from "../../components/StateComponents";
 import { apiService, type Member } from "../../lib/api";
+import styles from "../../components/MembersTable.module.css";
 
 export default function MembersPage() {
   const [members, setMembers] = useState<Member[]>([]);
@@ -34,14 +35,14 @@ export default function MembersPage() {
 
   const totalMembers = members.length;
   const premiumMembers = members.filter(
-    (m) => m.monthly_contribution >= 75,
+    (m) => parseFloat(m.monthly_contribution?.toString() || '0') >= 75
   ).length;
   const totalContributions = members.reduce(
-    (sum, m) => sum + m.monthly_contribution,
-    0,
+    (sum, m) => sum + parseFloat(m.monthly_contribution?.toString() || '0'),
+    0
   );
   const avgContribution =
-    totalMembers > 0 ? Math.round(totalContributions / totalMembers) : 0;
+    totalMembers > 0 ? totalContributions / totalMembers : 0;
 
   const stats = (
     <>
@@ -105,16 +106,21 @@ export default function MembersPage() {
             </td>
             <td>
               <span className={styles.contribution}>
-                {member.monthly_contribution.toLocaleString("es-ES", { style: "currency", currency: "EUR" })}
+                {parseFloat(member.monthly_contribution?.toString() || '0').toLocaleString("es-ES", {
+                  style: "currency",
+                  currency: "EUR",
+                })}
               </span>
             </td>
             <td>
               <span
                 className={`${styles.membership} ${
-                  member.monthly_contribution >= 75 ? styles.premium : styles.basic
+                  parseFloat(member.monthly_contribution?.toString() || '0') >= 75
+                    ? styles.premium
+                    : styles.basic
                 }`}
               >
-                {member.monthly_contribution >= 75 ? "Premium" : "Básico"}
+                {parseFloat(member.monthly_contribution?.toString() || '0') >= 75 ? "Premium" : "Básico"}
               </span>
             </td>
           </tr>
