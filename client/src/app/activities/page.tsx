@@ -9,6 +9,7 @@ import {
   EmptyState,
 } from "../../components/StateComponents";
 import { apiService, Activity } from "../../lib/api";
+import styles from "../../components/ActivitiesTable.module.css";
 
 export default function ActivitiesPage() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -80,7 +81,7 @@ export default function ActivitiesPage() {
   );
 
   const dataTable = (
-    <table className="dataTable">
+    <table className={styles.activitiesTable}>
       <thead>
         <tr>
           <th>Nombre</th>
@@ -93,14 +94,26 @@ export default function ActivitiesPage() {
       <tbody>
         {activities.map((activity) => (
           <tr key={activity.id}>
-            <td>{activity.name}</td>
-            <td>{activity.organization}</td>
-            <td>{new Date(activity.date).toLocaleDateString("es-ES")}</td>
-            <td>{activity.participants}</td>
+            <td>
+              <span className={styles.activityName}>{activity.name}</span>
+            </td>
+            <td>
+              <span className={styles.organization}>{activity.organization}</span>
+            </td>
+            <td>
+              <span className={styles.activityDate}>
+                {new Date(activity.date).toLocaleDateString("es-ES")}
+              </span>
+            </td>
+            <td>
+              <span className={styles.participants}>
+                {activity.participants}
+              </span>
+            </td>
             <td>
               <span
-                className={`activity-type ${
-                  activity.participants >= 50 ? "large" : "standard"
+                className={`${styles.activityType} ${
+                  activity.participants >= 50 ? styles.large : styles.standard
                 }`}
               >
                 {activity.participants >= 50 ? "Gran Evento" : "Estándar"}

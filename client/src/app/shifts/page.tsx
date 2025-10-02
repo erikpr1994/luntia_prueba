@@ -9,6 +9,7 @@ import {
   EmptyState,
 } from "../../components/StateComponents";
 import { apiService, Shift } from "../../lib/api";
+import styles from "../../components/ShiftsTable.module.css";
 
 export default function ShiftsPage() {
   const [shifts, setShifts] = useState<Shift[]>([]);
@@ -44,7 +45,7 @@ export default function ShiftsPage() {
   const formatHoursMinutes = (hours: number): string => {
     const wholeHours = Math.floor(hours);
     const minutes = Math.round((hours - wholeHours) * 60);
-    
+
     if (wholeHours === 0) {
       return `${minutes}min`;
     } else if (minutes === 0) {
@@ -84,7 +85,7 @@ export default function ShiftsPage() {
   );
 
   const dataTable = (
-    <table className="dataTable">
+    <table className={styles.shiftsTable}>
       <thead>
         <tr>
           <th>Voluntario</th>
@@ -98,16 +99,28 @@ export default function ShiftsPage() {
         {shifts.map((shift) => (
           <tr key={shift.id}>
             <td>
-              {shift.volunteer_name || `Voluntario ${shift.volunteer_id}`}
+              <span className={styles.volunteerName}>
+                {shift.volunteer_name || `Voluntario ${shift.volunteer_id}`}
+              </span>
             </td>
-            <td>{shift.organization}</td>
-            <td>{new Date(shift.date).toLocaleDateString("es-ES")}</td>
-            <td>{shift.activity}</td>
             <td>
-              {parseFloat(shift.hours?.toString() || "0").toLocaleString(
-                "es-ES"
-              )}
-              h
+              <span className={styles.organization}>{shift.organization}</span>
+            </td>
+            <td>
+              <span className={styles.shiftDate}>
+                {new Date(shift.date).toLocaleDateString("es-ES")}
+              </span>
+            </td>
+            <td>
+              <span className={styles.activity}>{shift.activity}</span>
+            </td>
+            <td>
+              <span className={styles.hours}>
+                {parseFloat(shift.hours?.toString() || "0").toLocaleString(
+                  "es-ES"
+                )}
+                h
+              </span>
             </td>
           </tr>
         ))}

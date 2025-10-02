@@ -9,6 +9,7 @@ import {
   EmptyState,
 } from "../../components/StateComponents";
 import { apiService, Donation } from "../../lib/api";
+import styles from "../../components/DonationsTable.module.css";
 
 export default function DonationsPage() {
   const [donations, setDonations] = useState<Donation[]>([]);
@@ -91,7 +92,7 @@ export default function DonationsPage() {
   );
 
   const dataTable = (
-    <table className="dataTable">
+    <table className={styles.donationsTable}>
       <thead>
         <tr>
           <th>Donante</th>
@@ -104,21 +105,31 @@ export default function DonationsPage() {
       <tbody>
         {donations.map((donation) => (
           <tr key={donation.id}>
-            <td>{donation.donor}</td>
-            <td>{donation.organization}</td>
             <td>
-              {parseFloat(donation.amount?.toString() || "0").toLocaleString(
-                "es-ES",
-                { style: "currency", currency: "EUR" }
-              )}
+              <span className={styles.donorName}>{donation.donor}</span>
             </td>
-            <td>{new Date(donation.date).toLocaleDateString("es-ES")}</td>
+            <td>
+              <span className={styles.organization}>{donation.organization}</span>
+            </td>
+            <td>
+              <span className={styles.amount}>
+                {parseFloat(donation.amount?.toString() || "0").toLocaleString(
+                  "es-ES",
+                  { style: "currency", currency: "EUR" }
+                )}
+              </span>
+            </td>
+            <td>
+              <span className={styles.donationDate}>
+                {new Date(donation.date).toLocaleDateString("es-ES")}
+              </span>
+            </td>
             <td>
               <span
-                className={`donation-type ${
+                className={`${styles.donationType} ${
                   parseFloat(donation.amount?.toString() || "0") >= 1000
-                    ? "major"
-                    : "standard"
+                    ? styles.major
+                    : styles.standard
                 }`}
               >
                 {parseFloat(donation.amount?.toString() || "0") >= 1000

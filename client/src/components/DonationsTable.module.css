@@ -1,0 +1,165 @@
+.donationsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.donationsTable th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+  padding: 16px 12px;
+  text-align: left;
+  border-bottom: 2px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.donationsTable td {
+  color: #4b5563;
+  font-size: 14px;
+  padding: 16px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.donationsTable tr:hover {
+  background: #f8fafc;
+  transition: background-color 0.2s ease;
+}
+
+.donationsTable tr:last-child td {
+  border-bottom: none;
+}
+
+/* Donor name styling */
+.donorName {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Organization styling */
+.organization {
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+/* Amount styling */
+.amount {
+  color: #059669;
+  font-weight: 600;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas,
+    "Courier New", monospace;
+}
+
+/* Date styling */
+.donationDate {
+  color: #6b7280;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas,
+    "Courier New", monospace;
+  font-size: 13px;
+}
+
+/* Donation type styling */
+.donationType {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.donationType.major {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #f59e0b;
+}
+
+.donationType.standard {
+  background: #e0e7ff;
+  color: #3730a3;
+  border: 1px solid #6366f1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .donationsTable {
+    font-size: 12px;
+  }
+  
+  .donationsTable th,
+  .donationsTable td {
+    padding: 12px 8px;
+  }
+  
+  .donationsTable th:nth-child(2),
+  .donationsTable td:nth-child(2) {
+    display: none; /* Hide organization on mobile */
+  }
+}
+
+@media (max-width: 640px) {
+  .donationsTable th:nth-child(4),
+  .donationsTable td:nth-child(4) {
+    display: none; /* Hide date on very small screens */
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .donationsTable {
+    background: #1f2937;
+  }
+  
+  .donationsTable th {
+    background: #374151;
+    color: #f3f4f6;
+    border-bottom-color: #4b5563;
+  }
+  
+  .donationsTable td {
+    color: #d1d5db;
+    border-bottom-color: #374151;
+  }
+  
+  .donationsTable tr:hover {
+    background: #374151;
+  }
+  
+  .donorName {
+    color: #f9fafb;
+  }
+  
+  .organization {
+    color: #60a5fa;
+  }
+  
+  .amount {
+    color: #34d399;
+  }
+  
+  .donationDate {
+    color: #9ca3af;
+  }
+  
+  .donationType.major {
+    background: #451a03;
+    color: #fbbf24;
+    border-color: #f59e0b;
+  }
+  
+  .donationType.standard {
+    background: #1e1b4b;
+    color: #a5b4fc;
+    border-color: #6366f1;
+  }
+}

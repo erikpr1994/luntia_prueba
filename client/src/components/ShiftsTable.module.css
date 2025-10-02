@@ -1,0 +1,144 @@
+.shiftsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.shiftsTable th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+  padding: 16px 12px;
+  text-align: left;
+  border-bottom: 2px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.shiftsTable td {
+  color: #4b5563;
+  font-size: 14px;
+  padding: 16px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.shiftsTable tr:hover {
+  background: #f8fafc;
+  transition: background-color 0.2s ease;
+}
+
+.shiftsTable tr:last-child td {
+  border-bottom: none;
+}
+
+/* Volunteer name styling */
+.volunteerName {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Organization styling */
+.organization {
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+/* Date styling */
+.shiftDate {
+  color: #6b7280;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas,
+    "Courier New", monospace;
+  font-size: 13px;
+}
+
+/* Activity styling */
+.activity {
+  color: #059669;
+  font-weight: 500;
+}
+
+/* Hours styling */
+.hours {
+  color: #7c3aed;
+  font-weight: 600;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas,
+    "Courier New", monospace;
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .shiftsTable {
+    font-size: 12px;
+  }
+  
+  .shiftsTable th,
+  .shiftsTable td {
+    padding: 12px 8px;
+  }
+  
+  .shiftsTable th:nth-child(2),
+  .shiftsTable td:nth-child(2) {
+    display: none; /* Hide organization on mobile */
+  }
+}
+
+@media (max-width: 640px) {
+  .shiftsTable th:nth-child(4),
+  .shiftsTable td:nth-child(4) {
+    display: none; /* Hide activity on very small screens */
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .shiftsTable {
+    background: #1f2937;
+  }
+  
+  .shiftsTable th {
+    background: #374151;
+    color: #f3f4f6;
+    border-bottom-color: #4b5563;
+  }
+  
+  .shiftsTable td {
+    color: #d1d5db;
+    border-bottom-color: #374151;
+  }
+  
+  .shiftsTable tr:hover {
+    background: #374151;
+  }
+  
+  .volunteerName {
+    color: #f9fafb;
+  }
+  
+  .organization {
+    color: #60a5fa;
+  }
+  
+  .shiftDate {
+    color: #9ca3af;
+  }
+  
+  .activity {
+    color: #34d399;
+  }
+  
+  .hours {
+    color: #a78bfa;
+    background: #374151;
+  }
+}
