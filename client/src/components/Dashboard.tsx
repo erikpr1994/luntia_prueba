@@ -1,30 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-server:dev: Error getting daily activity: error: bind message supplies 1 parameters, but prepared statement "" requires 0
-server:dev:     at /Users/erikpr94/Documents/luntia_prueba/node_modules/.pnpm/pg@8.16.3/node_modules/pg/lib/client.js:545:17
-server:dev:     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-server:dev:     at async query (/Users/erikpr94/Documents/luntia_prueba/server/src/database/connection.ts:21:20)
-server:dev:     at async MetricsService.getDailyVolunteerActivity (/Users/erikpr94/Documents/luntia_prueba/server/src/services/metricsService.ts:341:20)
-server:dev:     at async <anonymous> (/Users/erikpr94/Documents/luntia_prueba/server/src/routes/metricsRoutes.ts:116:22) {
-server:dev:   length: 137,
-server:dev:   severity: 'ERROR',
-server:dev:   code: '08P01',
-server:dev:   detail: undefined,
-server:dev:   hint: undefined,
-server:dev:   position: undefined,
-server:dev:   internalPosition: undefined,
-server:dev:   internalQuery: undefined,
-server:dev:   where: undefined,
-server:dev:   schema: undefined,
-server:dev:   table: undefined,
-server:dev:   column: undefined,
-server:dev:   dataType: undefined,
-server:dev:   constraint: undefined,
-server:dev:   file: 'postgres.c',
-server:dev:   line: '1674',
-server:dev:   routine: 'exec_bind_message'
-server:dev: }import {
+import {
   apiService,
   BasicMetrics,
   OverallStats,
