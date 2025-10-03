@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./Navigation.module.css";
 
 interface NavItem {
@@ -23,9 +23,9 @@ const NAV_ITEMS: NavItem[] = [
 export default function Navigation() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   const toggleMobileMenu = () => {
-    console.log("Toggling mobile menu, current state:", isMobileMenuOpen);
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
@@ -33,8 +33,25 @@ export default function Navigation() {
     setIsMobileMenuOpen(false);
   };
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
+
   return (
-    <nav className={styles.navContainer}>
+    <nav ref={navRef} className={styles.navContainer}>
       <div className={styles.navContent}>
         <Link href="/" className={styles.logo}>
           <span className={styles.logoIcon}>🏢</span>
@@ -62,14 +79,6 @@ export default function Navigation() {
           onClick={toggleMobileMenu}
           className={styles.mobileMenuButton}
           aria-label="Toggle menu"
-          style={{ 
-            display: 'block', 
-            background: 'red', 
-            color: 'white',
-            border: '2px solid blue',
-            padding: '10px',
-            fontSize: '16px'
-          }}
         >
           <span style={{ fontSize: "20px" }}>
             {isMobileMenuOpen ? "✕" : "☰"}
@@ -95,22 +104,6 @@ export default function Navigation() {
               </li>
             ))}
           </ul>
-        </div>
-      )}
-      {/* Debug indicator */}
-      {isMobileMenuOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: "10px",
-            right: "10px",
-            background: "red",
-            color: "white",
-            padding: "5px",
-            zIndex: 9999,
-          }}
-        >
-          Mobile menu is open!
         </div>
       )}
     </nav>
