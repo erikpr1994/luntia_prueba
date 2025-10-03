@@ -78,11 +78,11 @@
 
 .mobileMenuButton {
   display: none;
-  background: none;
-  border: none;
+  background: transparent;
+  border: 1px solid #e2e8f0;
   padding: 8px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 8px;
   color: #6b7280;
   position: relative;
   z-index: 1001;
@@ -90,11 +90,15 @@
   min-height: 44px;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .mobileMenuButton:hover {
-  background: #f3f4f6;
-  color: #3b82f6;
+  background: #3b82f6;
+  color: white;
+  border-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
 }
 
 .mobileMenu {
@@ -130,17 +134,21 @@
   text-decoration: none;
   color: #374151;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  margin: 0 8px;
 }
 
 .mobileMenuLink:hover {
-  background: #f9fafb;
+  background: #f0f9ff;
   color: #3b82f6;
+  transform: translateX(4px);
 }
 
 .mobileMenuLink.active {
-  background: #f0f9ff;
-  color: #3b82f6;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-weight: 600;
 }
 
 .mobileMenuIcon {
@@ -196,12 +204,17 @@
   }
 
   .mobileMenuButton {
+    background: transparent;
+    border-color: #4b5563;
     color: #9ca3af;
   }
 
   .mobileMenuButton:hover {
-    background: #374151;
-    color: #60a5fa;
+    background: #60a5fa;
+    color: white;
+    border-color: #3b82f6;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(96, 165, 250, 0.3);
   }
 
   .mobileMenu {
