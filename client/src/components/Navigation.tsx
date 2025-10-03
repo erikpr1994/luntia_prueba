@@ -23,6 +23,7 @@ const NAV_ITEMS: NavItem[] = [
 export default function Navigation() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
   const toggleMobileMenu = () => {
@@ -33,6 +34,11 @@ export default function Navigation() {
     setIsMobileMenuOpen(false);
   };
 
+  // Set client flag to prevent hydration issues
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -42,11 +48,11 @@ export default function Navigation() {
     };
 
     if (isMobileMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isMobileMenuOpen]);
 
@@ -86,7 +92,7 @@ export default function Navigation() {
         </button>
       </div>
 
-      {isMobileMenuOpen && (
+      {isClient && isMobileMenuOpen && (
         <div className={`${styles.mobileMenu} ${styles.open}`}>
           <ul className={styles.mobileMenuList}>
             {NAV_ITEMS.map((item) => (
