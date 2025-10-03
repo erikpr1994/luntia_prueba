@@ -8,11 +8,12 @@ import {
   ErrorState,
   EmptyState,
 } from "../../components/StateComponents";
-import { apiService, Volunteer } from "../../lib/api";
+import { apiService, Volunteer, BasicMetrics } from "../../lib/api";
 import styles from "../../components/VolunteersTable.module.css";
 
 export default function VolunteersPage() {
   const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
+  const [basicMetrics, setBasicMetrics] = useState<BasicMetrics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,8 +21,12 @@ export default function VolunteersPage() {
     try {
       setLoading(true);
       setError(null);
-      const response = await apiService.getVolunteers();
-      setVolunteers(response.data);
+      const [volunteersResponse, metricsResponse] = await Promise.all([
+        apiService.getVolunteers(),
+        apiService.getBasicMetrics(),
+      ]);
+      setVolunteers(volunteersResponse.data);
+      setBasicMetrics(metricsResponse.metrics);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
     } finally {
@@ -34,19 +39,13 @@ export default function VolunteersPage() {
   }, []);
 
   const activeVolunteers = volunteers.filter((v) => v.active).length;
-  const totalHours = volunteers.reduce((sum, v) => {
-    // Calculate hours from shifts - this would need to be calculated from shifts data
-    // For now, we'll use a placeholder calculation
-    return sum + (v.active ? Math.floor(Math.random() * 50) + 10 : 0);
-  }, 0);
-  const avgHours =
-    activeVolunteers > 0 ? Math.round(totalHours / activeVolunteers) : 0;
+  const avgHours = basicMetrics?.avgHoursPerVolunteer || 0;
 
   // Format hours and minutes for display
   const formatHoursMinutes = (hours: number): string => {
     const wholeHours = Math.floor(hours);
     const minutes = Math.round((hours - wholeHours) * 60);
-    
+
     if (wholeHours === 0) {
       return `${minutes}min`;
     } else if (minutes === 0) {
@@ -71,15 +70,9 @@ export default function VolunteersPage() {
         icon="✅"
       />
       <KPICard
-        title="Horas Totales"
-        value={totalHours.toLocaleString("es-ES")}
-        subtitle="Horas trabajadas"
-        icon="⏰"
-      />
-      <KPICard
         title="Promedio Horas"
         value={formatHoursMinutes(avgHours)}
-        subtitle="Horas por voluntario"
+        subtitle="Horas promedio por voluntario"
         icon="📊"
       />
     </>
