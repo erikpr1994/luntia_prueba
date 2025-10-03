@@ -95,12 +95,12 @@
   .membersTable {
     font-size: 12px;
   }
-  
+
   .membersTable th,
   .membersTable td {
     padding: 12px 8px;
   }
-  
+
   .membersTable th:nth-child(2),
   .membersTable td:nth-child(2) {
     display: none; /* Hide organization on mobile */
@@ -119,44 +119,44 @@
   .membersTable {
     background: #1f2937;
   }
-  
+
   .membersTable th {
     background: #374151;
     color: #f3f4f6;
     border-bottom-color: #4b5563;
   }
-  
+
   .membersTable td {
     color: #d1d5db;
     border-bottom-color: #374151;
   }
-  
+
   .membersTable tr:hover {
     background: #374151;
   }
-  
+
   .memberName {
     color: #f9fafb;
   }
-  
+
   .organization {
     color: #60a5fa;
   }
-  
+
   .joinDate {
     color: #9ca3af;
   }
-  
+
   .contribution {
     color: #34d399;
   }
-  
+
   .membership.premium {
     background: #451a03;
     color: #fbbf24;
     border-color: #f59e0b;
   }
-  
+
   .membership.basic {
     background: #1e1b4b;
     color: #a5b4fc;

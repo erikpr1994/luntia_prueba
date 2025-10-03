@@ -98,7 +98,9 @@ export default function ActivitiesPage() {
               <span className={styles.activityName}>{activity.name}</span>
             </td>
             <td>
-              <span className={styles.organization}>{activity.organization}</span>
+              <span className={styles.organization}>
+                {activity.organization}
+              </span>
             </td>
             <td>
               <span className={styles.activityDate}>

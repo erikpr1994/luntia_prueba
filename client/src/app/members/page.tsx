@@ -35,10 +35,10 @@ export default function MembersPage() {
 
   const totalMembers = members.length;
   const premiumMembers = members.filter(
-    (m) => parseFloat(m.monthly_contribution?.toString() || '0') >= 75
+    (m) => parseFloat(m.monthly_contribution?.toString() || "0") >= 75
   ).length;
   const totalContributions = members.reduce(
-    (sum, m) => sum + parseFloat(m.monthly_contribution?.toString() || '0'),
+    (sum, m) => sum + parseFloat(m.monthly_contribution?.toString() || "0"),
     0
   );
   const avgContribution =
@@ -106,7 +106,9 @@ export default function MembersPage() {
             </td>
             <td>
               <span className={styles.contribution}>
-                {parseFloat(member.monthly_contribution?.toString() || '0').toLocaleString("es-ES", {
+                {parseFloat(
+                  member.monthly_contribution?.toString() || "0"
+                ).toLocaleString("es-ES", {
                   style: "currency",
                   currency: "EUR",
                 })}
@@ -115,12 +117,16 @@ export default function MembersPage() {
             <td>
               <span
                 className={`${styles.membership} ${
-                  parseFloat(member.monthly_contribution?.toString() || '0') >= 75
+                  parseFloat(member.monthly_contribution?.toString() || "0") >=
+                  75
                     ? styles.premium
                     : styles.basic
                 }`}
               >
-                {parseFloat(member.monthly_contribution?.toString() || '0') >= 75 ? "Premium" : "Básico"}
+                {parseFloat(member.monthly_contribution?.toString() || "0") >=
+                75
+                  ? "Premium"
+                  : "Básico"}
               </span>
             </td>
           </tr>

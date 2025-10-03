@@ -109,7 +109,9 @@ export default function DonationsPage() {
               <span className={styles.donorName}>{donation.donor}</span>
             </td>
             <td>
-              <span className={styles.organization}>{donation.organization}</span>
+              <span className={styles.organization}>
+                {donation.organization}
+              </span>
             </td>
             <td>
               <span className={styles.amount}>

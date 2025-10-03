@@ -95,12 +95,12 @@
   .donationsTable {
     font-size: 12px;
   }
-  
+
   .donationsTable th,
   .donationsTable td {
     padding: 12px 8px;
   }
-  
+
   .donationsTable th:nth-child(2),
   .donationsTable td:nth-child(2) {
     display: none; /* Hide organization on mobile */
@@ -119,44 +119,44 @@
   .donationsTable {
     background: #1f2937;
   }
-  
+
   .donationsTable th {
     background: #374151;
     color: #f3f4f6;
     border-bottom-color: #4b5563;
   }
-  
+
   .donationsTable td {
     color: #d1d5db;
     border-bottom-color: #374151;
   }
-  
+
   .donationsTable tr:hover {
     background: #374151;
   }
-  
+
   .donorName {
     color: #f9fafb;
   }
-  
+
   .organization {
     color: #60a5fa;
   }
-  
+
   .amount {
     color: #34d399;
   }
-  
+
   .donationDate {
     color: #9ca3af;
   }
-  
+
   .donationType.major {
     background: #451a03;
     color: #fbbf24;
     border-color: #f59e0b;
   }
-  
+
   .donationType.standard {
     background: #1e1b4b;
     color: #a5b4fc;

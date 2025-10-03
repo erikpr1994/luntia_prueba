@@ -81,12 +81,12 @@
   .shiftsTable {
     font-size: 12px;
   }
-  
+
   .shiftsTable th,
   .shiftsTable td {
     padding: 12px 8px;
   }
-  
+
   .shiftsTable th:nth-child(2),
   .shiftsTable td:nth-child(2) {
     display: none; /* Hide organization on mobile */
@@ -105,38 +105,38 @@
   .shiftsTable {
     background: #1f2937;
   }
-  
+
   .shiftsTable th {
     background: #374151;
     color: #f3f4f6;
     border-bottom-color: #4b5563;
   }
-  
+
   .shiftsTable td {
     color: #d1d5db;
     border-bottom-color: #374151;
   }
-  
+
   .shiftsTable tr:hover {
     background: #374151;
   }
-  
+
   .volunteerName {
     color: #f9fafb;
   }
-  
+
   .organization {
     color: #60a5fa;
   }
-  
+
   .shiftDate {
     color: #9ca3af;
   }
-  
+
   .activity {
     color: #34d399;
   }
-  
+
   .hours {
     color: #a78bfa;
     background: #374151;

@@ -99,12 +99,12 @@
   .activitiesTable {
     font-size: 12px;
   }
-  
+
   .activitiesTable th,
   .activitiesTable td {
     padding: 12px 8px;
   }
-  
+
   .activitiesTable th:nth-child(2),
   .activitiesTable td:nth-child(2) {
     display: none; /* Hide organization on mobile */
@@ -123,45 +123,45 @@
   .activitiesTable {
     background: #1f2937;
   }
-  
+
   .activitiesTable th {
     background: #374151;
     color: #f3f4f6;
     border-bottom-color: #4b5563;
   }
-  
+
   .activitiesTable td {
     color: #d1d5db;
     border-bottom-color: #374151;
   }
-  
+
   .activitiesTable tr:hover {
     background: #374151;
   }
-  
+
   .activityName {
     color: #f9fafb;
   }
-  
+
   .organization {
     color: #60a5fa;
   }
-  
+
   .activityDate {
     color: #9ca3af;
   }
-  
+
   .participants {
     color: #a78bfa;
     background: #374151;
   }
-  
+
   .activityType.large {
     background: #451a03;
     color: #fbbf24;
     border-color: #f59e0b;
   }
-  
+
   .activityType.standard {
     background: #1e1b4b;
     color: #a5b4fc;

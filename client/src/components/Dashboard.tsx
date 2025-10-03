@@ -53,7 +53,7 @@ export default function Dashboard({ organization }: DashboardProps) {
   const formatHoursMinutes = (hours: number): string => {
     const wholeHours = Math.floor(hours);
     const minutes = Math.round((hours - wholeHours) * 60);
-    
+
     if (wholeHours === 0) {
       return `${minutes}min`;
     } else if (minutes === 0) {
