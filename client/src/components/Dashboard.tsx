@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   apiService,
-  BasicMetrics,
-  OverallStats,
-  DailyActivity,
+  type BasicMetrics,
+  type DailyActivity,
+  type OverallStats,
 } from "../lib/api";
-import KPICard from "./KPICard";
 import Chart from "./Chart";
-import { LoadingState, ErrorState, EmptyState } from "./StateComponents";
 import styles from "./Dashboard.module.css";
+import KPICard from "./KPICard";
+import { EmptyState, ErrorState, LoadingState } from "./StateComponents";
 
 interface DashboardProps {
   organization?: string;
@@ -23,7 +23,7 @@ export default function Dashboard({ organization }: DashboardProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -43,11 +43,11 @@ export default function Dashboard({ organization }: DashboardProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [organization]);
 
   useEffect(() => {
     fetchData();
-  }, [organization]);
+  }, [fetchData]);
 
   // Format hours and minutes for display
   const formatHoursMinutes = (hours: number): string => {

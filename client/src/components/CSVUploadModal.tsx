@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Modal from "./Modal";
 import CSVUpload from "./CSVUpload";
+import Modal from "./Modal";
 
 interface CSVUploadModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ export default function CSVUploadModal({
   dataType,
   onUploadComplete,
 }: CSVUploadModalProps) {
-  const [uploadComplete, setUploadComplete] = useState(false);
+  const [_uploadComplete, setUploadComplete] = useState(false);
 
   const handleUploadComplete = () => {
     setUploadComplete(true);

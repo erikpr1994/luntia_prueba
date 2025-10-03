@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
 import {
-  LoadingState,
-  ErrorState,
   EmptyState,
+  ErrorState,
+  LoadingState,
 } from "../../components/StateComponents";
-import { apiService, Volunteer, BasicMetrics } from "../../lib/api";
 import styles from "../../components/VolunteersTable.module.css";
+import { apiService, type BasicMetrics, type Volunteer } from "../../lib/api";
 
 export default function VolunteersPage() {
   const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
@@ -17,7 +17,7 @@ export default function VolunteersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchVolunteers = async () => {
+  const fetchVolunteers = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -32,11 +32,11 @@ export default function VolunteersPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchVolunteers();
-  }, []);
+  }, [fetchVolunteers]);
 
   const activeVolunteers = volunteers.filter((v) => v.active).length;
   const avgHours = basicMetrics?.avgHoursPerVolunteer || 0;

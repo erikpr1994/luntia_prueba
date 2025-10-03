@@ -53,8 +53,9 @@
 /* Date styling */
 .activityDate {
   color: #6b7280;
-  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas,
-    "Courier New", monospace;
+  font-family:
+    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New",
+    monospace;
   font-size: 13px;
 }
 
@@ -62,8 +63,9 @@
 .participants {
   color: #7c3aed;
   font-weight: 600;
-  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas,
-    "Courier New", monospace;
+  font-family:
+    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New",
+    monospace;
   background: #f3f4f6;
   padding: 4px 8px;
   border-radius: 6px;

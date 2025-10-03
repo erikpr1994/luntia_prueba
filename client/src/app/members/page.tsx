@@ -3,13 +3,13 @@
 import { useCallback, useEffect, useState } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
+import styles from "../../components/MembersTable.module.css";
 import {
   EmptyState,
   ErrorState,
   LoadingState,
 } from "../../components/StateComponents";
 import { apiService, type Member } from "../../lib/api";
-import styles from "../../components/MembersTable.module.css";
 
 export default function MembersPage() {
   const [members, setMembers] = useState<Member[]>([]);
@@ -35,11 +35,11 @@ export default function MembersPage() {
 
   const totalMembers = members.length;
   const premiumMembers = members.filter(
-    (m) => parseFloat(m.monthly_contribution?.toString() || "0") >= 75
+    (m) => parseFloat(m.monthly_contribution?.toString() || "0") >= 75,
   ).length;
   const totalContributions = members.reduce(
     (sum, m) => sum + parseFloat(m.monthly_contribution?.toString() || "0"),
-    0
+    0,
   );
   const avgContribution =
     totalMembers > 0 ? totalContributions / totalMembers : 0;
@@ -107,7 +107,7 @@ export default function MembersPage() {
             <td>
               <span className={styles.contribution}>
                 {parseFloat(
-                  member.monthly_contribution?.toString() || "0"
+                  member.monthly_contribution?.toString() || "0",
                 ).toLocaleString("es-ES", {
                   style: "currency",
                   currency: "EUR",

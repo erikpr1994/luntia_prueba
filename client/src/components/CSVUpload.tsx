@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { apiService } from "../lib/api";
 import CSVFormatHelp from "./CSVFormatHelp";
 import styles from "./CSVUpload.module.css";
@@ -53,7 +53,7 @@ export default function CSVUpload({
 }: CSVUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dataType, setDataType] = useState<DataType>(
-    propDataType || "volunteers"
+    propDataType || "volunteers",
   );
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -87,7 +87,7 @@ export default function CSVUpload({
 
     const files = Array.from(e.dataTransfer.files);
     const csvFile = files.find(
-      (file) => file.type === "text/csv" || file.name.endsWith(".csv")
+      (file) => file.type === "text/csv" || file.name.endsWith(".csv"),
     );
 
     if (csvFile) {
@@ -108,14 +108,14 @@ export default function CSVUpload({
         setUploadResult(null);
       }
     },
-    []
+    [],
   );
 
   const handleDataTypeChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       setDataType(e.target.value as DataType);
     },
-    []
+    [],
   );
 
   // Update dataType when prop changes
@@ -187,7 +187,7 @@ export default function CSVUpload({
       }, 3000);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Error al subir el archivo"
+        err instanceof Error ? err.message : "Error al subir el archivo",
       );
       setUploadProgress(0);
     } finally {
@@ -241,10 +241,9 @@ export default function CSVUpload({
         </div>
       )}
 
-      <div
+      <button
+        type="button"
         className={`${styles.dropZone} ${isDragging ? styles.dragActive : ""}`}
-        role="button"
-        tabIndex={0}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
@@ -266,7 +265,7 @@ export default function CSVUpload({
         <p className={styles.dropZoneSubtext}>
           o haz clic para seleccionar un archivo
         </p>
-      </div>
+      </button>
 
       <input
         ref={fileInputRef}

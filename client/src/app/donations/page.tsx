@@ -1,22 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DataPage from "../../components/DataPage";
+import styles from "../../components/DonationsTable.module.css";
 import KPICard from "../../components/KPICard";
 import {
-  LoadingState,
-  ErrorState,
   EmptyState,
+  ErrorState,
+  LoadingState,
 } from "../../components/StateComponents";
-import { apiService, Donation } from "../../lib/api";
-import styles from "../../components/DonationsTable.module.css";
+import { apiService, type Donation } from "../../lib/api";
 
 export default function DonationsPage() {
   const [donations, setDonations] = useState<Donation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchDonations = async () => {
+  const fetchDonations = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -27,16 +27,16 @@ export default function DonationsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchDonations();
-  }, []);
+  }, [fetchDonations]);
 
   const totalDonations = donations.length;
   const totalAmount = donations.reduce(
     (sum, donation) => sum + parseFloat(donation.amount?.toString() || "0"),
-    0
+    0,
   );
   const uniqueDonors = new Set(donations.map((d) => d.donor)).size;
   const avgDonation = totalDonations > 0 ? totalAmount / totalDonations : 0;
@@ -50,7 +50,7 @@ export default function DonationsPage() {
   });
   const recentAmount = recentDonations.reduce(
     (sum, donation) => sum + parseFloat(donation.amount?.toString() || "0"),
-    0
+    0,
   );
 
   const stats = (
@@ -117,7 +117,7 @@ export default function DonationsPage() {
               <span className={styles.amount}>
                 {parseFloat(donation.amount?.toString() || "0").toLocaleString(
                   "es-ES",
-                  { style: "currency", currency: "EUR" }
+                  { style: "currency", currency: "EUR" },
                 )}
               </span>
             </td>

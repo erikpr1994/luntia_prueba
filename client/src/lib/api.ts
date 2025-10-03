@@ -100,19 +100,19 @@ class ApiService {
 
   async getDailyVolunteerActivity(
     days: number = 30,
-    organization?: string
+    organization?: string,
   ): Promise<{ activity: DailyActivity[] }> {
     const queryParam = organization
       ? `?days=${days}&organization=${encodeURIComponent(organization)}`
       : `?days=${days}`;
     return this.request<{ activity: DailyActivity[] }>(
-      `/api/metrics/daily-activity${queryParam}`
+      `/api/metrics/daily-activity${queryParam}`,
     );
   }
 
   async uploadCSV(
     endpoint: string,
-    file: File
+    file: File,
   ): Promise<{ message: string; processed: number; errors: number }> {
     try {
       const formData = new FormData();
@@ -126,7 +126,7 @@ class ApiService {
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
-          errorData.error || `HTTP error! status: ${response.status}`
+          errorData.error || `HTTP error! status: ${response.status}`,
         );
       }
 
@@ -167,7 +167,7 @@ class ApiService {
     if (filters?.organization) {
       queryParams.append("organization", filters.organization);
     }
-    
+
     const queryString = queryParams.toString();
     const url = `/api/volunteers${queryString ? `?${queryString}` : ""}`;
     return this.request<{ data: Volunteer[] }>(url);
@@ -178,17 +178,17 @@ class ApiService {
     if (filters?.organization) {
       queryParams.append("organization", filters.organization);
     }
-    
+
     const queryString = queryParams.toString();
     const url = `/api/members${queryString ? `?${queryString}` : ""}`;
     return this.request<{ data: Member[] }>(url);
   }
 
-  async getShifts(filters?: { 
-    volunteer_id?: string; 
-    organization?: string; 
-    date_from?: string; 
-    date_to?: string; 
+  async getShifts(filters?: {
+    volunteer_id?: string;
+    organization?: string;
+    date_from?: string;
+    date_to?: string;
   }) {
     const queryParams = new URLSearchParams();
     if (filters?.volunteer_id) {
@@ -203,13 +203,17 @@ class ApiService {
     if (filters?.date_to) {
       queryParams.append("date_to", filters.date_to);
     }
-    
+
     const queryString = queryParams.toString();
     const url = `/api/shifts${queryString ? `?${queryString}` : ""}`;
     return this.request<{ data: Shift[] }>(url);
   }
 
-  async getDonations(filters?: { organization?: string; date_from?: string; date_to?: string }) {
+  async getDonations(filters?: {
+    organization?: string;
+    date_from?: string;
+    date_to?: string;
+  }) {
     const queryParams = new URLSearchParams();
     if (filters?.organization) {
       queryParams.append("organization", filters.organization);
@@ -220,13 +224,17 @@ class ApiService {
     if (filters?.date_to) {
       queryParams.append("date_to", filters.date_to);
     }
-    
+
     const queryString = queryParams.toString();
     const url = `/api/donations${queryString ? `?${queryString}` : ""}`;
     return this.request<{ data: Donation[] }>(url);
   }
 
-  async getActivities(filters?: { organization?: string; date_from?: string; date_to?: string }) {
+  async getActivities(filters?: {
+    organization?: string;
+    date_from?: string;
+    date_to?: string;
+  }) {
     const queryParams = new URLSearchParams();
     if (filters?.organization) {
       queryParams.append("organization", filters.organization);
@@ -237,7 +245,7 @@ class ApiService {
     if (filters?.date_to) {
       queryParams.append("date_to", filters.date_to);
     }
-    
+
     const queryString = queryParams.toString();
     const url = `/api/activities${queryString ? `?${queryString}` : ""}`;
     return this.request<{ data: Activity[] }>(url);

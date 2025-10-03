@@ -1,22 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+import styles from "../../components/ActivitiesTable.module.css";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
 import {
-  LoadingState,
-  ErrorState,
   EmptyState,
+  ErrorState,
+  LoadingState,
 } from "../../components/StateComponents";
-import { apiService, Activity } from "../../lib/api";
-import styles from "../../components/ActivitiesTable.module.css";
+import { type Activity, apiService } from "../../lib/api";
 
 export default function ActivitiesPage() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchActivities = async () => {
+  const fetchActivities = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -27,21 +27,19 @@ export default function ActivitiesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchActivities();
-  }, []);
+  }, [fetchActivities]);
 
   const totalActivities = activities.length;
   const totalParticipants = activities.reduce(
     (sum, activity) => sum + activity.participants,
-    0
+    0,
   );
   const avgParticipants =
     totalActivities > 0 ? Math.round(totalParticipants / totalActivities) : 0;
-  const uniqueOrganizations = new Set(activities.map((a) => a.organization))
-    .size;
 
   // Get recent activities (last 7 days)
   const recentActivities = activities.filter((a) => {

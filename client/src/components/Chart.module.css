@@ -52,21 +52,13 @@
     color: #9ca3af;
   }
 
-  /* Dark mode chart styling */
-  .chartContainer :global(.recharts-cartesian-grid-horizontal line),
-  .chartContainer :global(.recharts-cartesian-grid-vertical line) {
-    stroke: #374151 !important;
-    stroke-opacity: 0.3 !important;
-  }
-
-  .chartContainer :global(.recharts-xAxis),
-  .chartContainer :global(.recharts-yAxis) {
-    color: #9ca3af !important;
-  }
-
-  .chartContainer :global(.recharts-tooltip-wrapper) {
-    background: #374151 !important;
-    border: 1px solid #4b5563 !important;
-    color: #f9fafb !important;
+  /* Dark mode chart styling - using global styles */
+  .chartContainer {
+    --recharts-grid-stroke: #374151;
+    --recharts-grid-opacity: 0.3;
+    --recharts-axis-color: #9ca3af;
+    --recharts-tooltip-bg: #374151;
+    --recharts-tooltip-border: #4b5563;
+    --recharts-tooltip-color: #f9fafb;
   }
 }

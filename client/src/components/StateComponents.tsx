@@ -30,7 +30,7 @@ export function ErrorState({
       <h2 className={styles.errorTitle}>{title}</h2>
       <p className={styles.errorMessage}>{message}</p>
       {onRetry && (
-        <button className={styles.retryButton} onClick={onRetry}>
+        <button type="button" className={styles.retryButton} onClick={onRetry}>
           Reintentar
         </button>
       )}

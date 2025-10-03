@@ -47,7 +47,18 @@ export default function Modal({
   };
 
   return (
-    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
+    <div
+      className={styles.modalOverlay}
+      onClick={handleOverlayClick}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          onClose();
+        }
+      }}
+      role="dialog"
+      aria-modal="true"
+      tabIndex={-1}
+    >
       <div
         className={styles.modalContent}
         style={{

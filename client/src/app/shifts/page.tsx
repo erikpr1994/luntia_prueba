@@ -1,22 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DataPage from "../../components/DataPage";
 import KPICard from "../../components/KPICard";
-import {
-  LoadingState,
-  ErrorState,
-  EmptyState,
-} from "../../components/StateComponents";
-import { apiService, Shift } from "../../lib/api";
 import styles from "../../components/ShiftsTable.module.css";
+import {
+  EmptyState,
+  ErrorState,
+  LoadingState,
+} from "../../components/StateComponents";
+import { apiService, type Shift } from "../../lib/api";
 
 export default function ShiftsPage() {
   const [shifts, setShifts] = useState<Shift[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchShifts = async () => {
+  const fetchShifts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -27,16 +27,16 @@ export default function ShiftsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchShifts();
-  }, []);
+  }, [fetchShifts]);
 
   const totalShifts = shifts.length;
   const totalHours = shifts.reduce(
     (sum, shift) => sum + parseFloat(shift.hours?.toString() || "0"),
-    0
+    0,
   );
   const avgHoursPerShift = totalShifts > 0 ? totalHours / totalShifts : 0;
   const uniqueVolunteers = new Set(shifts.map((s) => s.volunteer_id)).size;
@@ -117,7 +117,7 @@ export default function ShiftsPage() {
             <td>
               <span className={styles.hours}>
                 {parseFloat(shift.hours?.toString() || "0").toLocaleString(
-                  "es-ES"
+                  "es-ES",
                 )}
                 h
               </span>
