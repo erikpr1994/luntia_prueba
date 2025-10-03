@@ -25,7 +25,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
-    console.log('Toggling mobile menu, current state:', isMobileMenuOpen);
+    console.log("Toggling mobile menu, current state:", isMobileMenuOpen);
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
@@ -62,6 +62,14 @@ export default function Navigation() {
           onClick={toggleMobileMenu}
           className={styles.mobileMenuButton}
           aria-label="Toggle menu"
+          style={{ 
+            display: 'block', 
+            background: 'red', 
+            color: 'white',
+            border: '2px solid blue',
+            padding: '10px',
+            fontSize: '16px'
+          }}
         >
           <span style={{ fontSize: "20px" }}>
             {isMobileMenuOpen ? "✕" : "☰"}
@@ -91,15 +99,17 @@ export default function Navigation() {
       )}
       {/* Debug indicator */}
       {isMobileMenuOpen && (
-        <div style={{ 
-          position: 'fixed', 
-          top: '10px', 
-          right: '10px', 
-          background: 'red', 
-          color: 'white', 
-          padding: '5px',
-          zIndex: 9999
-        }}>
+        <div
+          style={{
+            position: "fixed",
+            top: "10px",
+            right: "10px",
+            background: "red",
+            color: "white",
+            padding: "5px",
+            zIndex: 9999,
+          }}
+        >
           Mobile menu is open!
         </div>
       )}
