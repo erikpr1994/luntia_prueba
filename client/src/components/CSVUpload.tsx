@@ -53,7 +53,7 @@ export default function CSVUpload({
 }: CSVUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dataType, setDataType] = useState<DataType>(
-    propDataType || "volunteers",
+    propDataType || "volunteers"
   );
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -87,7 +87,7 @@ export default function CSVUpload({
 
     const files = Array.from(e.dataTransfer.files);
     const csvFile = files.find(
-      (file) => file.type === "text/csv" || file.name.endsWith(".csv"),
+      (file) => file.type === "text/csv" || file.name.endsWith(".csv")
     );
 
     if (csvFile) {
@@ -108,14 +108,14 @@ export default function CSVUpload({
         setUploadResult(null);
       }
     },
-    [],
+    []
   );
 
   const handleDataTypeChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       setDataType(e.target.value as DataType);
     },
-    [],
+    []
   );
 
   // Update dataType when prop changes
@@ -187,7 +187,7 @@ export default function CSVUpload({
       }, 3000);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Error al subir el archivo",
+        err instanceof Error ? err.message : "Error al subir el archivo"
       );
       setUploadProgress(0);
     } finally {

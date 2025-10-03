@@ -25,6 +25,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
+    console.log('Toggling mobile menu, current state:', isMobileMenuOpen);
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
@@ -86,6 +87,20 @@ export default function Navigation() {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+      {/* Debug indicator */}
+      {isMobileMenuOpen && (
+        <div style={{ 
+          position: 'fixed', 
+          top: '10px', 
+          right: '10px', 
+          background: 'red', 
+          color: 'white', 
+          padding: '5px',
+          zIndex: 9999
+        }}>
+          Mobile menu is open!
         </div>
       )}
     </nav>
